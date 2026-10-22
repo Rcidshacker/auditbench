@@ -34,7 +34,7 @@ def _post(path: str, payload: dict, retries: int) -> dict:
         except urllib.error.HTTPError as e:
             detail = e.read().decode(errors="replace")[:300]
             # quota errors are final; rate-limit/overload are retried with backoff
-            if e.code in (429, 529) and "quota" not in detail and attempt < retries - 1:
+            if e.code in (429, 500, 502, 503, 529) and "quota" not in detail and attempt < retries - 1:
                 time.sleep(float(e.headers.get("retry-after") or 2 ** attempt))
                 continue
             raise RuntimeError(f"OpenJev HTTP {e.code}: {detail}") from None

@@ -4,7 +4,7 @@
 
 ## 1. Headline findings
 
-1. **A cheap classifier-style auditor matches the best published frontier judge.**
+1. **A cheap classifier-style auditor is statistically tied with the best published frontier judges** (see finding 7 for the CIs).
    - The OpenJev System One `score` question (calibrated 1–5 distribution; full context of outline + Article + documentation) reaches **QWK 0.877** against the median of three legal experts (mean of 3 samples). A single sample gives **0.866**.
    - The best published AIReg-Bench judge, Gemini 2.5 Pro, scores **0.863** (single sample). Recomputed from the authors' spreadsheets; GPT-5 is 0.849.
    - Experts agree with each other at α = 0.657 (leave-one-expert-out QWK 0.696). Read model–expert agreement as agreement with a *consensus*, not with an individual expert.
@@ -28,6 +28,20 @@
    - Removing the Article text: QWK 0.877 → 0.835, MAE 0.46 → 0.58.
    - Removing the system outline: QWK 0.877 → 0.849.
    - Both effects are smaller than the configuration-sensitivity reported for Petri-based behavioural auditors (Slater, …, Wei 2026). This fits compliance being an easier, better-specified target, but this pilot cannot separate the explanations.
+
+## 1b. Phase 2 findings (plan in `PLAN.md`)
+
+7. **The headline lead is a tie, not a win (L4).**
+   - Paired bootstrap of QWK differences: OpenJev holistic vs Gemini 2.5 Pro is +0.013 (95% CI −0.020, +0.050); vs GPT-5 +0.028 (−0.021, +0.079); vs Grok 4 +0.048 (−0.003, +0.100). **Statistically tied.**
+   - Differences that *are* significant: holistic beats the published Claude Sonnet, GPT-4o, o3, Gemini Flash, Gemma and o3-mini; holistic beats decomposed by +0.237 (+0.145, +0.339).
+   - Detection is saturated. Strong auditors separate compliant from violation files with AUROC ≈ 1.0 against the generation-intent label, and the expert median reaches 0.995. The benchmark's remaining signal is severity grading.
+   - On the 79/120 items where all three experts agree within one point, holistic reaches QWK 0.935 (Gemini 2.5 Pro: 0.933).
+8. **Realistic length breaks robustness, depending on position (L3).**
+   - Setup: each excerpt was embedded in a "dossier" with the compliant sections for the other four Articles of the same system (~3.5× longer, label-preserving), with the target section first, middle or last.
+   - **Target first:** scores on non-compliant documents rise (holistic +0.32, generative +0.59), and auditors falsely clear **9.6%** (holistic) and **15.1%** (generative) of documents the experts judged non-compliant. Generative QWK falls 0.828 → 0.746.
+   - **Target last:** no inflation (holistic +0.005 on non-compliant docs).
+   - Reading: compliant text *after* the violation dilutes it. That's a recency/halo effect, and it's exactly what a real Annex IV file, with many sections, would trigger.
+9. **No sign that renaming matters (L5).** Swapping every company and product name for a fresh one moved scores by +0.011 (CI −0.022, +0.044) for holistic and +0.011 (−0.042, +0.061) for generative, with no verdict flips beyond noise. This weak probe finds no evidence that verdicts depend on memorised surface names; it can't rule memorisation out.
 
 ## 2. Why this matters
 
@@ -100,6 +114,8 @@ See `results/RESULTS.md` for all tables. Key rows:
 | Benchmark-to-reality gap | Over-trust from benchmark scores | High | High | Synthetic data | Pilot on real redacted documentation with notified-body reviewers | MAP 3 / MEASURE 4 |
 
 ## 7. Policy implications (draft memo points)
+
+0. **Audit the whole file, section by section.** Phase 2 (L3) shows that feeding an auditor a full multi-Article dossier lets compliant sections mask a violation in an earlier one (up to 15% false clearances). Tools should score each Article section on its own, with the rest supplied only as context.
 
 1. **The AI Office and notified bodies should publish minimum validation requirements** before LLM screening outputs count as evidence in conformity assessment: expert-agreement κ, test–retest stability, and an adversarial-robustness check against provider-supplied text. Each is cheap to measure (this pilot cost $0 on a free tier).
 2. **Self-assessment text should be machine-separable.** The Annex IV documentation format should mark provider assertions apart from evidence, so automated tools can ignore or flag them, and so can humans.

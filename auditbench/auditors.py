@@ -31,8 +31,16 @@ _AIREG = _aireg_prompt_fns()
 
 def generative_prompt(item: Item, perturbation: str) -> str:
     """AIReg-Bench's original annotation prompt (ablation 0), with the perturbed documentation."""
-    doc = PERTURBATIONS[perturbation](item.documentation, item.article)
-    return _AIREG["build_prompt"](item.article_text, doc, item.system_outline, item.article, 0)
+    doc, outline = apply(perturbation, item)
+    return _AIREG["build_prompt"](item.article_text, doc, outline, item.article, 0)
+
+
+def apply(perturbation: str, item: Item) -> tuple[str, str]:
+    """Return (documentation, system_outline) after the perturbation."""
+    if perturbation in PERTURBATIONS:
+        return PERTURBATIONS[perturbation](item.documentation, item.article), item.system_outline
+    from . import stress  # item-level perturbations (rename, dossier_*) need more than the text
+    return stress.apply(perturbation, item)
 
 
 def parse_generative(text: str) -> dict:
@@ -93,8 +101,8 @@ def requirements(article_text: str) -> list[str]:
 
 def build(config: str, item: Item, perturbation: str) -> tuple[dict, dict]:
     """Return (state, questions) for one OpenJev request."""
-    doc = PERTURBATIONS[perturbation](item.documentation, item.article)
-    state = {"system_outline": item.system_outline, "article": item.article_text, "documentation": doc}
+    doc, outline = apply(perturbation, item)
+    state = {"system_outline": outline, "article": item.article_text, "documentation": doc}
     if config == "holistic_noarticle":
         del state["article"]
     elif config == "holistic_nooutline":

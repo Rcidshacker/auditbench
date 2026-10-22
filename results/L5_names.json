@@ -1,0 +1,518 @@
+{
+ "a9_u1_compliant": {
+  "Meridian Traffic Solutions": "Ostrava Applied AI",
+  "SafeRoute Traffic Monitor": "Verity Core"
+ },
+ "a9_u1_violation_1": {
+  "Meridian Traffic Solutions": "Ostrava Applied AI",
+  "SafeRoute Traffic Monitor": "Verity Core",
+  "SafeRoute": "Atlas-7 Engine"
+ },
+ "a9_u1_violation_2": {
+  "Meridian Traffic Solutions": "Ostrava Applied AI",
+  "SafeRoute Traffic Monitor": "Verity Core"
+ },
+ "a9_u2_compliant": {
+  "Norwin Industrial Technologies": "Pelham & Ruiz AI",
+  "Gas Safety Insight": "Cobalt Sentinel"
+ },
+ "a9_u2_violation_1": {
+  "Norwin Industrial Technologies": "Pelham & Ruiz AI",
+  "Gas Safety Insight": "Cobalt Sentinel"
+ },
+ "a9_u2_violation_2": {
+  "Norwin Industrial Technologies": "Pelham & Ruiz AI",
+  "Gas Safety Insight": "Cobalt Sentinel"
+ },
+ "a9_u3_compliant": {
+  "Meridian Cognition Technologies": "Brightwater Labs",
+  "Adaptive Learning Outcome Analyzer": "Fathom Grade"
+ },
+ "a9_u3_violation_1": {
+  "Meridian Cognition Technologies": "Brightwater Labs",
+  "Adaptive Learning Outcome Analyzer": "Fathom Grade"
+ },
+ "a9_u3_violation_2": {
+  "Meridian Cognition Technologies": "Brightwater Labs",
+  "Adaptive Learning Outcome Analyzer": "Fathom Grade",
+  "ALOA": "Meridia Scan"
+ },
+ "a9_u4_compliant": {
+  "Meridian Educational Technologies": "Kestrel Data GmbH",
+  "Insight Proctor Analytics": "Verity Core"
+ },
+ "a9_u4_violation_1": {
+  "Meridian Educational Technologies": "Kestrel Data GmbH",
+  "Insight Proctor Analytics": "Verity Core"
+ },
+ "a9_u4_violation_2": {
+  "Meridian Educational Technologies": "Kestrel Data GmbH",
+  "Insight Proctor Analytics": "Verity Core"
+ },
+ "a9_u5_compliant": {
+  "Sterling Recruitment Technologies": "Tinderbox Intelligence",
+  "Talent Insight Model": "Cobalt Sentinel"
+ },
+ "a9_u5_violation_1": {
+  "Sterling Recruitment Technologies": "Tinderbox Intelligence",
+  "Talent Insight Model": "Cobalt Sentinel"
+ },
+ "a9_u5_violation_2": {
+  "Sterling Recruitment Technologies": "Tinderbox Intelligence",
+  "Talent Insight Model": "Cobalt Sentinel"
+ },
+ "a9_u6_compliant": {
+  "Vanguard Human Capital Technologies": "Northgate Cognition",
+  "Contractual Separation Insight": "Tessel Review",
+  "Product Lifecycle Risk Management Protocol (PLRMP)": "Meridia Scan"
+ },
+ "a9_u6_violation_1": {
+  "Vanguard Human Capital Technologies": "Northgate Cognition",
+  "Contractual Separation Insight": "Tessel Review"
+ },
+ "a9_u6_violation_2": {
+  "Vanguard Human Capital Technologies": "Northgate Cognition",
+  "Contractual Separation Insight": "Tessel Review"
+ },
+ "a9_u7_compliant": {
+  "Veritas Risk Solutions": "Brightwater Labs",
+  "European Banking Authority": "Ostrava Applied AI",
+  "Consumer Credit Transformer": "Lumen Assess"
+ },
+ "a9_u7_violation_1": {
+  "Veritas Risk Solutions": "Brightwater Labs",
+  "Consumer Credit Transformer": "Lumen Assess"
+ },
+ "a9_u7_violation_2": {
+  "Veritas Risk Solutions": "Brightwater Labs",
+  "Consumer Credit Transformer": "Lumen Assess"
+ },
+ "a9_u8_compliant": {
+  "Urban Safety Analytics": "Kestrel Data GmbH",
+  "Emergency Dispatch Prioritization Engine": "Tessel Review"
+ },
+ "a9_u8_violation_1": {
+  "Urban Safety Analytics": "Kestrel Data GmbH",
+  "Emergency Dispatch Prioritization Engine": "Tessel Review",
+  "EDPE": "Fathom Grade"
+ },
+ "a9_u8_violation_2": {
+  "Urban Safety Analytics": "Kestrel Data GmbH",
+  "Emergency Dispatch Prioritization Engine": "Tessel Review",
+  "EDPE": "Fathom Grade"
+ },
+ "a10_u1_compliant": {
+  "Meridian Traffic Solutions": "Ostrava Applied AI",
+  "SafeRoute Traffic Monitor": "Verity Core",
+  "SafeRoute": "Atlas-7 Engine",
+  "Fairlearn": "Fathom Grade"
+ },
+ "a10_u1_violation_1": {
+  "Meridian Traffic Solutions": "Ostrava Applied AI",
+  "SafeRoute Traffic Monitor": "Verity Core"
+ },
+ "a10_u1_violation_2": {
+  "Meridian Traffic Solutions": "Ostrava Applied AI",
+  "EU Urban Traffic Data Consortium": "Ostrava Applied AI",
+  "SafeRoute Traffic Monitor": "Verity Core",
+  "SafeRoute": "Atlas-7 Engine"
+ },
+ "a10_u2_compliant": {
+  "Norwin Industrial Technologies": "Pelham & Ruiz AI",
+  "Gas Safety Insight": "Cobalt Sentinel"
+ },
+ "a10_u2_violation_1": {
+  "Norwin Industrial Technologies": "Pelham & Ruiz AI",
+  "Gas Safety Insight": "Cobalt Sentinel"
+ },
+ "a10_u2_violation_2": {
+  "Norwin Industrial Technologies": "Pelham & Ruiz AI",
+  "Gas Safety Insight": "Cobalt Sentinel"
+ },
+ "a10_u3_compliant": {
+  "Meridian Cognition Technologies": "Brightwater Labs",
+  "Adaptive Learning Outcome Analyzer": "Fathom Grade",
+  "ALOA": "Meridia Scan"
+ },
+ "a10_u3_violation_1": {
+  "Meridian Cognition Technologies": "Brightwater Labs",
+  "Adaptive Learning Outcome Analyzer": "Fathom Grade"
+ },
+ "a10_u3_violation_2": {
+  "Meridian Cognition Technologies": "Brightwater Labs",
+  "Adaptive Learning Outcome Analyzer": "Fathom Grade"
+ },
+ "a10_u4_compliant": {
+  "Meridian Educational Technologies": "Kestrel Data GmbH",
+  "Insight Proctor Analytics": "Verity Core"
+ },
+ "a10_u4_violation_1": {
+  "Insight Proctor Analytics": "Verity Core",
+  "Meridian Educational Technologies": "Kestrel Data GmbH"
+ },
+ "a10_u4_violation_2": {
+  "Meridian Educational Technologies": "Kestrel Data GmbH",
+  "Insight Proctor Analytics": "Verity Core"
+ },
+ "a10_u5_compliant": {
+  "Sterling Recruitment Technologies": "Tinderbox Intelligence",
+  "Talent Insight Model": "Cobalt Sentinel"
+ },
+ "a10_u5_violation_1": {
+  "Sterling Recruitment Technologies": "Tinderbox Intelligence",
+  "Talent Insight Model": "Cobalt Sentinel"
+ },
+ "a10_u5_violation_2": {
+  "Sterling Recruitment Technologies": "Tinderbox Intelligence",
+  "Talent Insight Model": "Cobalt Sentinel"
+ },
+ "a10_u6_compliant": {
+  "Vanguard Human Capital Technologies": "Northgate Cognition",
+  "Contractual Separation Insight": "Tessel Review",
+  "AI Fairness 360": "Lumen Assess"
+ },
+ "a10_u6_violation_1": {
+  "Vanguard Human Capital Technologies": "Northgate Cognition",
+  "Contractual Separation Insight": "Tessel Review"
+ },
+ "a10_u6_violation_2": {
+  "Vanguard Human Capital Technologies": "Northgate Cognition",
+  "Contractual Separation Insight": "Tessel Review"
+ },
+ "a10_u7_compliant": {
+  "Veritas Risk Solutions": "Brightwater Labs",
+  "European Consumer Credit Risk Consortium": "Halvorsen Analytics",
+  "Consumer Credit Transformer": "Lumen Assess"
+ },
+ "a10_u7_violation_1": {
+  "Veritas Risk Solutions": "Brightwater Labs",
+  "Consumer Credit Transformer": "Lumen Assess"
+ },
+ "a10_u7_violation_2": {
+  "Veritas Risk Solutions": "Brightwater Labs",
+  "Consumer Credit Transformer": "Lumen Assess"
+ },
+ "a10_u8_compliant": {
+  "Urban Safety Analytics": "Kestrel Data GmbH",
+  "Emergency Dispatch Prioritization Engine": "Tessel Review"
+ },
+ "a10_u8_violation_1": {
+  "Urban Safety Analytics": "Kestrel Data GmbH",
+  "Emergency Dispatch Prioritization Engine": "Tessel Review"
+ },
+ "a10_u8_violation_2": {
+  "Urban Safety Analytics": "Kestrel Data GmbH",
+  "Emergency Dispatch Prioritization Engine": "Tessel Review"
+ },
+ "a12_u1_compliant": {
+  "Meridian Traffic Solutions": "Ostrava Applied AI",
+  "SafeRoute Traffic Monitor": "Verity Core"
+ },
+ "a12_u1_violation_1": {
+  "Meridian Traffic Solutions": "Ostrava Applied AI",
+  "SafeRoute Traffic Monitor": "Verity Core"
+ },
+ "a12_u1_violation_2": {
+  "Meridian Traffic Solutions": "Ostrava Applied AI",
+  "SafeRoute Traffic Monitor": "Verity Core"
+ },
+ "a12_u2_compliant": {
+  "Norwin Industrial Technologies": "Pelham & Ruiz AI",
+  "Gas Safety Insight": "Cobalt Sentinel"
+ },
+ "a12_u2_violation_1": {
+  "Norwin Industrial Technologies": "Pelham & Ruiz AI",
+  "Gas Safety Insight": "Cobalt Sentinel"
+ },
+ "a12_u2_violation_2": {
+  "Norwin Industrial Technologies": "Pelham & Ruiz AI",
+  "Gas Safety Insight": "Cobalt Sentinel"
+ },
+ "a12_u3_compliant": {
+  "Meridian Cognition Technologies": "Brightwater Labs",
+  "Adaptive Learning Outcome Analyzer": "Fathom Grade"
+ },
+ "a12_u3_violation_1": {
+  "Meridian Cognition Technologies": "Brightwater Labs",
+  "Adaptive Learning Outcome Analyzer": "Fathom Grade",
+  "ALOA": "Meridia Scan"
+ },
+ "a12_u3_violation_2": {
+  "Meridian Cognition Technologies": "Brightwater Labs",
+  "Adaptive Learning Outcome Analyzer": "Fathom Grade"
+ },
+ "a12_u4_compliant": {
+  "Meridian Educational Technologies": "Kestrel Data GmbH",
+  "Insight Proctor Analytics": "Verity Core"
+ },
+ "a12_u4_violation_1": {
+  "Meridian Educational Technologies": "Kestrel Data GmbH",
+  "Insight Proctor Analytics": "Verity Core"
+ },
+ "a12_u4_violation_2": {
+  "Meridian Educational Technologies": "Kestrel Data GmbH",
+  "Insight Proctor Analytics": "Verity Core"
+ },
+ "a12_u5_compliant": {
+  "Sterling Recruitment Technologies": "Tinderbox Intelligence",
+  "Talent Insight Model": "Cobalt Sentinel"
+ },
+ "a12_u5_violation_1": {
+  "Sterling Recruitment Technologies": "Tinderbox Intelligence",
+  "Talent Insight Model": "Cobalt Sentinel"
+ },
+ "a12_u5_violation_2": {
+  "Sterling Recruitment Technologies": "Tinderbox Intelligence",
+  "Talent Insight Model": "Cobalt Sentinel"
+ },
+ "a12_u6_compliant": {
+  "Vanguard Human Capital Technologies": "Northgate Cognition",
+  "Contractual Separation Insight": "Tessel Review"
+ },
+ "a12_u6_violation_1": {
+  "Vanguard Human Capital Technologies": "Northgate Cognition",
+  "Contractual Separation Insight": "Tessel Review",
+  "Elasticsearch": "Quarry Signal"
+ },
+ "a12_u6_violation_2": {
+  "Vanguard Human Capital Technologies": "Northgate Cognition",
+  "Contractual Separation Insight": "Tessel Review"
+ },
+ "a12_u7_compliant": {
+  "Veritas Risk Solutions": "Brightwater Labs",
+  "Consumer Credit Transformer": "Lumen Assess"
+ },
+ "a12_u7_violation_1": {
+  "Veritas Risk Solutions": "Brightwater Labs",
+  "Consumer Credit Transformer": "Lumen Assess"
+ },
+ "a12_u7_violation_2": {
+  "Veritas Risk Solutions": "Brightwater Labs",
+  "Consumer Credit Transformer": "Lumen Assess"
+ },
+ "a12_u8_compliant": {
+  "Urban Safety Analytics": "Kestrel Data GmbH",
+  "Emergency Dispatch Prioritization Engine": "Tessel Review",
+  "Apache Kafka": "Tessel Review"
+ },
+ "a12_u8_violation_1": {
+  "Urban Safety Analytics": "Kestrel Data GmbH",
+  "Emergency Dispatch Prioritization Engine": "Tessel Review"
+ },
+ "a12_u8_violation_2": {
+  "Urban Safety Analytics": "Kestrel Data GmbH",
+  "Emergency Dispatch Prioritization Engine": "Tessel Review"
+ },
+ "a14_u1_compliant": {
+  "Meridian Traffic Solutions": "Ostrava Applied AI",
+  "SafeRoute Traffic Monitor": "Verity Core",
+  "SafeRoute": "Atlas-7 Engine"
+ },
+ "a14_u1_violation_1": {
+  "Meridian Traffic Solutions": "Ostrava Applied AI",
+  "SafeRoute Traffic Monitor": "Verity Core",
+  "SafeRoute": "Atlas-7 Engine"
+ },
+ "a14_u1_violation_2": {
+  "Meridian Traffic Solutions": "Ostrava Applied AI",
+  "SafeRoute Traffic Monitor": "Verity Core",
+  "SafeRoute": "Atlas-7 Engine"
+ },
+ "a14_u2_compliant": {
+  "Norwin Industrial Technologies": "Pelham & Ruiz AI",
+  "Gas Safety Insight": "Cobalt Sentinel"
+ },
+ "a14_u2_violation_1": {
+  "Norwin Industrial Technologies": "Pelham & Ruiz AI",
+  "Gas Safety Insight": "Cobalt Sentinel"
+ },
+ "a14_u2_violation_2": {
+  "Norwin Industrial Technologies": "Pelham & Ruiz AI",
+  "Gas Safety Insight": "Cobalt Sentinel"
+ },
+ "a14_u3_compliant": {
+  "Meridian Cognition Technologies": "Brightwater Labs",
+  "Adaptive Learning Outcome Analyzer": "Fathom Grade"
+ },
+ "a14_u3_violation_1": {
+  "Meridian Cognition Technologies": "Brightwater Labs",
+  "Adaptive Learning Outcome Analyzer": "Fathom Grade"
+ },
+ "a14_u3_violation_2": {
+  "Meridian Cognition Technologies": "Brightwater Labs",
+  "Adaptive Learning Outcome Analyzer": "Fathom Grade"
+ },
+ "a14_u4_compliant": {
+  "Meridian Educational Technologies": "Kestrel Data GmbH",
+  "Insight Proctor Analytics": "Verity Core",
+  "Intervention Panel": "Cobalt Sentinel"
+ },
+ "a14_u4_violation_1": {
+  "Meridian Educational Technologies": "Kestrel Data GmbH",
+  "Insight Proctor Analytics": "Verity Core"
+ },
+ "a14_u4_violation_2": {
+  "Meridian Educational Technologies": "Kestrel Data GmbH",
+  "Insight Proctor Analytics": "Verity Core"
+ },
+ "a14_u5_compliant": {
+  "Sterling Recruitment Technologies": "Tinderbox Intelligence",
+  "Talent Insight Model": "Cobalt Sentinel"
+ },
+ "a14_u5_violation_1": {
+  "Sterling Recruitment Technologies": "Tinderbox Intelligence",
+  "Talent Insight Model": "Cobalt Sentinel"
+ },
+ "a14_u5_violation_2": {
+  "Sterling Recruitment Technologies": "Tinderbox Intelligence",
+  "Talent Insight Model": "Cobalt Sentinel"
+ },
+ "a14_u6_compliant": {
+  "Vanguard Human Capital Technologies": "Northgate Cognition",
+  "Contractual Separation Insight": "Tessel Review"
+ },
+ "a14_u6_violation_1": {
+  "Vanguard Human Capital Technologies": "Northgate Cognition",
+  "Contractual Separation Insight": "Tessel Review"
+ },
+ "a14_u6_violation_2": {
+  "Vanguard Human Capital Technologies": "Northgate Cognition",
+  "Contractual Separation Insight": "Tessel Review"
+ },
+ "a14_u7_compliant": {
+  "Veritas Risk Solutions": "Brightwater Labs",
+  "Consumer Credit Transformer": "Lumen Assess",
+  "SHAP": "Atlas-7 Engine"
+ },
+ "a14_u7_violation_1": {
+  "Veritas Risk Solutions": "Brightwater Labs",
+  "Consumer Credit Transformer": "Lumen Assess"
+ },
+ "a14_u7_violation_2": {
+  "Veritas Risk Solutions": "Brightwater Labs",
+  "Consumer Credit Transformer": "Lumen Assess"
+ },
+ "a14_u8_compliant": {
+  "Urban Safety Analytics": "Kestrel Data GmbH",
+  "Emergency Dispatch Prioritization Engine": "Tessel Review",
+  "EDPE": "Fathom Grade"
+ },
+ "a14_u8_violation_1": {
+  "Urban Safety Analytics": "Kestrel Data GmbH",
+  "Emergency Dispatch Prioritization Engine": "Tessel Review",
+  "EDPE": "Fathom Grade"
+ },
+ "a14_u8_violation_2": {
+  "Urban Safety Analytics": "Kestrel Data GmbH",
+  "Emergency Dispatch Prioritization Engine": "Tessel Review",
+  "EDPE": "Fathom Grade"
+ },
+ "a15_u1_compliant": {
+  "Meridian Traffic Solutions": "Ostrava Applied AI",
+  "SafeRoute Traffic Monitor": "Verity Core",
+  "SafeRoute": "Atlas-7 Engine"
+ },
+ "a15_u1_violation_1": {
+  "Meridian Traffic Solutions": "Ostrava Applied AI",
+  "SafeRoute Traffic Monitor": "Verity Core",
+  "SafeRoute": "Atlas-7 Engine"
+ },
+ "a15_u1_violation_2": {
+  "Meridian Traffic Solutions": "Ostrava Applied AI",
+  "SafeRoute Traffic Monitor": "Verity Core",
+  "SafeRoute": "Atlas-7 Engine"
+ },
+ "a15_u2_compliant": {
+  "Norwin Industrial Technologies": "Pelham & Ruiz AI",
+  "European AI Benchmark Consortium": "Ardent Loop Ltd",
+  "Gas Safety Insight": "Cobalt Sentinel"
+ },
+ "a15_u2_violation_1": {
+  "Norwin Industrial Technologies": "Pelham & Ruiz AI",
+  "Gas Safety Insight": "Cobalt Sentinel"
+ },
+ "a15_u2_violation_2": {
+  "Norwin Industrial Technologies": "Pelham & Ruiz AI",
+  "Gas Safety Insight": "Cobalt Sentinel"
+ },
+ "a15_u3_compliant": {
+  "Meridian Cognition Technologies": "Brightwater Labs",
+  "Adaptive Learning Outcome Analyzer": "Fathom Grade"
+ },
+ "a15_u3_violation_1": {
+  "Meridian Cognition Technologies": "Brightwater Labs",
+  "Adaptive Learning Outcome Analyzer": "Fathom Grade"
+ },
+ "a15_u3_violation_2": {
+  "Meridian Cognition Technologies": "Brightwater Labs",
+  "Adaptive Learning Outcome Analyzer": "Fathom Grade"
+ },
+ "a15_u4_compliant": {
+  "Meridian Educational Technologies": "Kestrel Data GmbH",
+  "European Metrology Institute": "Tinderbox Intelligence",
+  "Insight Proctor Analytics": "Verity Core"
+ },
+ "a15_u4_violation_1": {
+  "Meridian Educational Technologies": "Kestrel Data GmbH",
+  "Insight Proctor Analytics": "Verity Core"
+ },
+ "a15_u4_violation_2": {
+  "Meridian Educational Technologies": "Kestrel Data GmbH",
+  "Insight Proctor Analytics": "Verity Core"
+ },
+ "a15_u5_compliant": {
+  "Sterling Recruitment Technologies": "Tinderbox Intelligence",
+  "European Metrology Network": "Brightwater Labs",
+  "Talent Insight Model": "Cobalt Sentinel"
+ },
+ "a15_u5_violation_1": {
+  "Sterling Recruitment Technologies": "Tinderbox Intelligence",
+  "Talent Insight Model": "Cobalt Sentinel"
+ },
+ "a15_u5_violation_2": {
+  "Sterling Recruitment Technologies": "Tinderbox Intelligence",
+  "NVIDIA": "Brightwater Labs",
+  "Talent Insight Model": "Cobalt Sentinel",
+  "NVIDIA A100": "Meridia Scan"
+ },
+ "a15_u6_compliant": {
+  "Vanguard Human Capital Technologies": "Northgate Cognition",
+  "Contractual Separation Insight": "Tessel Review"
+ },
+ "a15_u6_violation_1": {
+  "Vanguard Human Capital Technologies": "Northgate Cognition",
+  "Contractual Separation Insight": "Tessel Review"
+ },
+ "a15_u6_violation_2": {
+  "Vanguard Human Capital Technologies": "Northgate Cognition",
+  "Contractual Separation Insight": "Tessel Review"
+ },
+ "a15_u7_compliant": {
+  "Veritas Risk Solutions": "Brightwater Labs",
+  "European Institute for AI Performance Standards (EIAIPS)": "Quillmark Systems",
+  "Consumer Credit Transformer": "Lumen Assess",
+  "Project CleverHans": "Lumen Assess"
+ },
+ "a15_u7_violation_1": {
+  "Veritas Risk Solutions": "Brightwater Labs",
+  "Consumer Credit Transformer": "Lumen Assess"
+ },
+ "a15_u7_violation_2": {
+  "Veritas Risk Solutions": "Brightwater Labs",
+  "Consumer Credit Transformer": "Lumen Assess"
+ },
+ "a15_u8_compliant": {
+  "Urban Safety Analytics": "Kestrel Data GmbH",
+  "European AI Benchmark Consortium": "Ardent Loop Ltd",
+  "Emergency Dispatch Prioritization Engine": "Tessel Review",
+  "EDPE": "Fathom Grade"
+ },
+ "a15_u8_violation_1": {
+  "Urban Safety Analytics": "Kestrel Data GmbH",
+  "Emergency Dispatch Prioritization Engine": "Tessel Review"
+ },
+ "a15_u8_violation_2": {
+  "Urban Safety Analytics": "Kestrel Data GmbH",
+  "Emergency Dispatch Prioritization Engine": "Tessel Review"
+ }
+}

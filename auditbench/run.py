@@ -14,6 +14,7 @@ from pathlib import Path
 from .auditors import PERTURBATIONS, build, generative_prompt, parse_generative, score
 from .data import load_items
 from .openjev import chat, systemone
+from .providers import generate
 
 OUT = Path(__file__).resolve().parent.parent / "results" / "runs.jsonl"
 CONFIGS = ["holistic", "holistic_noarticle", "holistic_nooutline", "decomposed", "generative"]
@@ -28,8 +29,9 @@ def done_keys() -> set[tuple]:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--configs", nargs="+", default=["holistic"], choices=CONFIGS)
-    ap.add_argument("--perturbations", nargs="+", default=["none"], choices=list(PERTURBATIONS))
+    ap.add_argument("--configs", nargs="+", default=["holistic"],
+                    help=f"{CONFIGS} or gen:<provider>:<model> (see providers.py)")
+    ap.add_argument("--perturbations", nargs="+", default=["none"], choices=list(PERTURBATIONS) + ["rename", "dossier_first", "dossier_middle", "dossier_last"])
     ap.add_argument("--k", type=int, default=3, help="independent samples per cell (samples=1 each)")
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--workers", type=int, default=12)
@@ -54,6 +56,10 @@ def main():
             return {"config": c, "perturbation": p, "item_id": it.item_id, "sample": s, "model": r["model"],
                     "input_tokens": r["usage"]["prompt_tokens"],
                     **parse_generative(r["choices"][0]["message"]["content"])}
+        if c.startswith("gen:"):  # gen:<provider>:<model>, same AIReg-Bench prompt through another provider
+            text, model, ntok = generate(c[4:], generative_prompt(it, p))
+            return {"config": c, "perturbation": p, "item_id": it.item_id, "sample": s, "model": model,
+                    "input_tokens": ntok, **parse_generative(text)}
         state, qs = build(c, it, p)
         r = systemone(state, qs, samples=1)
         return {"config": c, "perturbation": p, "item_id": it.item_id, "sample": s,

@@ -11,13 +11,13 @@ EU AI Act pre-screening for Articles 9 to 15, section by section, with NVIDIA Ne
 [![Python](https://img.shields.io/badge/python-FastAPI-3776AB?style=flat-square&logo=python&logoColor=white)](#run-it)
 [![License: MIT](https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square)](LICENSE)
 
-[**Try it**](https://auditbench-screener.vercel.app) · [**Watch the 2-minute demo**](docs/media/auditbench_demo.mp4) · [**Read the study**](REPORT.md)
+[**Try it**](https://auditbench-screener.vercel.app) · [**Watch the 2-minute demo**](https://auditbench-screener.vercel.app/static/demo.mp4) · [**Read the study**](REPORT.md)
 
 <br>
 
 <img src="docs/media/demo.gif" alt="AuditBench Screener screening a five-section technical file: the hidden Article 14 human-oversight violation is rated likely non-compliant, with quotes checked against the source." width="880">
 
-<sub>Real run on the live site: a hidden Article 14 violation in a five-section technical file is caught. <a href="docs/media/auditbench_demo.mp4">Full demo video (2:10, no audio)</a></sub>
+<sub>Real run on the live site: a hidden Article 14 violation in a five-section technical file is caught. <a href="https://auditbench-screener.vercel.app/static/demo.mp4">Full demo video (2:10, no audio)</a></sub>
 
 </div>
 

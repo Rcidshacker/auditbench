@@ -1,4 +1,4 @@
-"""Assemble the hackathon demo video in Concat through its MCP server (no voiceover: titles + captions).
+"""Assemble the hackathon demo video in Concat through its MCP server (titles, captions and an Edge neural-voice voiceover).
 
     python video/edit.py        # builds video/concat_project, previews frames, exports video/auditbench_demo.mp4
 """
@@ -96,10 +96,10 @@ def main():
         track = c.call("timeline_read", path=path)["timeline"]["tracks"][-1]["id"]  # listed top to bottom
 
         # main lane: (kind, media, length)
-        plan = [("card", bg_id, 22.0), ("clip", clip_ids["1_landing"], duration(CLIPS / "1_landing.mp4")),
+        plan = [("card", bg_id, 30.0), ("clip", clip_ids["1_landing"], duration(CLIPS / "1_landing.mp4")),
                 ("clip", clip_ids["2_dossier"], duration(CLIPS / "2_dossier.mp4")),
                 ("clip", clip_ids["3_injected"], duration(CLIPS / "3_injected.mp4")),
-                ("card", bg_id, 8.0), ("clip", clip_ids["4_findings"], duration(CLIPS / "4_findings.mp4")),
+                ("card", bg_id, 11.0), ("clip", clip_ids["4_findings"], duration(CLIPS / "4_findings.mp4")),
                 ("card", bg_id, 8.0)]
         t, starts = 0.0, []
         for kind, media, length in plan:
@@ -116,21 +116,21 @@ def main():
                    style={"content": text, "fontSize": size, "fontWeight": weight, "color": color})
 
         # intro cards
-        title(s_intro + 0.5, 5.0, "AuditBench Screener", size=0.1, y=-0.05)
-        title(s_intro + 0.5, 5.0, "EU AI Act pre-screening with NVIDIA Nemotron on Nebius Token Factory",
+        title(s_intro + 0.5, 7.0, "AuditBench Screener", size=0.1, y=-0.05)
+        title(s_intro + 0.5, 7.0, "EU AI Act pre-screening with NVIDIA Nemotron on Nebius Token Factory",
               size=0.035, weight=500, color=MUTE, y=0.07)
-        title(s_intro + 6.5, 7.0, "From 2 December 2027, high-risk AI must document\ncompliance with EU AI Act "
+        title(s_intro + 8.0, 10.5, "From 2 December 2027, high-risk AI must document\ncompliance with EU AI Act "
               "Articles 9 to 15.", size=0.05, y=-0.08)
-        title(s_intro + 6.5, 7.0, "Reviewers will use LLMs to pre-screen it. Can they be trusted?", size=0.035,
+        title(s_intro + 8.0, 10.5, "Reviewers will use LLMs to pre-screen it. Can they be trusted?", size=0.035,
               weight=500, color=ACCENT, y=0.1)
-        title(s_intro + 14.5, 7.0, "We tested LLM auditors on 120 files labelled by legal experts.", size=0.042,
+        title(s_intro + 19.0, 10.5, "We tested LLM auditors on 120 files labelled by legal experts.", size=0.042,
               y=-0.1)
-        title(s_intro + 14.5, 7.0, "Put the violating section first in a full technical file:\nwhole-file judges "
+        title(s_intro + 19.0, 10.5, "Put the violating section first in a full technical file:\nwhole-file judges "
               "missed up to 37% of violations.", size=0.042, weight=600, color=ACCENT, y=0.06)
 
         # results + outro cards
-        title(s_results + 0.3, 7.5, "Same 120 files, run on Nebius Token Factory", size=0.04, color=MUTE, y=-0.2)
-        title(s_results + 0.3, 7.5, "Violations missed\nWhole-file Nemotron 3 Nano: 37%\nAuditBench Screener: 5.5%",
+        title(s_results + 0.3, 10.4, "Same 120 files, run on Nebius Token Factory", size=0.04, color=MUTE, y=-0.2)
+        title(s_results + 0.3, 10.4, "Violations missed\nWhole-file Nemotron 3 Nano: 37%\nAuditBench Screener: 5.5%",
               size=0.06, y=0.02)
         title(s_outro + 0.3, 7.5, "AuditBench Screener", size=0.08, y=-0.12)
         title(s_outro + 0.3, 7.5, "auditbench-screener.vercel.app\ngithub.com/Rcidshacker/auditbench  (MIT)",
@@ -162,11 +162,22 @@ def main():
                captions=[{"start": a, "end": b, "text": txt} for a, b, txt in caps],
                style={"fontSize": 0.036, "fontWeight": 600, "color": INK, "background": "#111113d9"})
 
+        # voiceover (video/voice.py, Microsoft Edge neural voice): its own lane, each line at its segment + offset
+        voice_dir = HERE / "voice"
+        if voice_dir.exists():
+            from narration import LINES
+            seg = {"intro": s_intro, "land": s_land, "dossier": s_dossier, "inject": s_inject,
+                   "results": s_results, "find": s_find, "outro": s_outro}
+            vlane = created(c.call("track_add", path=path, bottom=True))
+            for name, segment, offset, _slot, _text in LINES:
+                vid = created(c.call("media_import", path=path, file=str(voice_dir / f"{name}.mp3")))
+                c.call("clip_add", path=path, mediaId=vid, start=seg[segment] + offset, trackId=vlane)
+
         c.call("project_save", path=path)
         previews = HERE / "previews"
         shutil.rmtree(previews, ignore_errors=True)
         previews.mkdir()
-        for name, sec in [("intro", s_intro + 3), ("problem", s_intro + 10), ("finding", s_intro + 18),
+        for name, sec in [("intro", s_intro + 3), ("problem", s_intro + 13), ("finding", s_intro + 24),
                           ("land", s_land + 4), ("dossier", s_dossier + 25), ("inject", s_inject + 24),
                           ("results", s_results + 4), ("findings", s_find + 6), ("outro", s_outro + 4)]:
             c.call("preview_frame", path=path, time=sec, width=960, height=540, output=str(previews / f"{name}.png"))

@@ -1,0 +1,7 @@
+.venv
+external
+research
+results
+notes
+*.md
+!README.md

@@ -22,7 +22,8 @@ from . import keys
 
 # name: (base_url, key env var, requests per minute we allow ourselves)
 OPENAI_COMPAT = {
-    "nvidia": ("https://integrate.api.nvidia.com/v1", "NVIDIA_API_KEY", 35),
+    "nvidia": ("https://integrate.api.nvidia.com/v1", "NVIDIA_API_KEY", 25),
+    "nebius": ("https://api.tokenfactory.nebius.com/v1", "NEBIUS_API_KEY", 120),  # Token Factory (hackathon)
     "openrouter": ("https://openrouter.ai/api/v1", "OPENROUTER_API_KEY", 18),
     "groq": ("https://api.groq.com/openai/v1", "GROQ_API_KEY", 25),
     "gemini": ("https://generativelanguage.googleapis.com/v1beta/openai", "GEMINI_API_KEY", 9),
@@ -49,14 +50,15 @@ def strip_reasoning(text: str) -> str:
     return re.sub(r"(?s)<think>.*?</think>", "", text or "").strip()
 
 
-def generate(spec: str, prompt: str, max_tokens: int = 900, retries: int = 6) -> tuple[str, str, int]:
+def generate(spec: str, prompt: str, max_tokens: int = 4096, retries: int = 6) -> tuple[str, str, int]:
     """Return (text, model_id, prompt_tokens)."""
     provider, model = spec.split(":", 1)
     if provider == "claude":
         return _claude(model, prompt)
     base, key_name, rpm = OPENAI_COMPAT[provider]
-    if provider == "local":
-        base = keys.get("LOCAL_LLM_BASE_URL") or "http://127.0.0.1:1337/v1"
+    if provider == "local":  # Atomic Chat server (Server > Configuration shows port and API key)
+        base = keys.get("LOCAL_LLM_BASE_URL") or "http://127.0.0.1:64303/v1"
+        key_name = "LOCAL_LLM_API_KEY" if keys.get("LOCAL_LLM_API_KEY") else None
     headers = {"Content-Type": "application/json", "User-Agent": "auditbench/0.1"}
     if key_name:
         key = keys.get(key_name)
@@ -65,6 +67,10 @@ def generate(spec: str, prompt: str, max_tokens: int = 900, retries: int = 6) ->
         headers["Authorization"] = f"Bearer {key}"
     body = {"model": model, "max_tokens": max_tokens, "temperature": 1.0,
             "messages": [{"role": "user", "content": prompt}]}
+    if provider in ("nvidia", "nebius"):
+        # NIM reasoning models (e.g. nemotron-3.5-lightning) otherwise spend >4k tokens thinking and return no answer;
+        # thinking off for every NVIDIA model keeps the comparison like-for-like. Models without the switch ignore it.
+        body["chat_template_kwargs"] = {"enable_thinking": False}
     for attempt in range(retries):
         _wait_turn(provider, rpm)
         req = urllib.request.Request(f"{base}/chat/completions", data=json.dumps(body).encode(), headers=headers)
@@ -91,7 +97,21 @@ def generate(spec: str, prompt: str, max_tokens: int = 900, retries: int = 6) ->
 _CLAUDE_STRIP = ("ANTHROPIC_BASE_URL", "ANTHROPIC_AUTH_TOKEN", "ANTHROPIC_MODEL", "ANTHROPIC_DEFAULT_HAIKU_MODEL",
                  "ANTHROPIC_DEFAULT_SONNET_MODEL", "ANTHROPIC_DEFAULT_OPUS_MODEL", "ANTHROPIC_API_KEY", "CLAUDECODE",
                  "CLAUDE_CODE_ENTRYPOINT", "CLAUDE_CODE_CHILD_SESSION", "CLAUDE_CODE_SDK_HAS_HOST_AUTH_REFRESH")
-_CLAUDE_DIR = tempfile.mkdtemp(prefix="auditbench-claude-")  # empty cwd: no project CLAUDE.md or settings
+# Empty cwd *outside* the user's home: Claude Code also loads CLAUDE.md / .claude/CLAUDE.md from every ancestor
+# directory, and C:\Users\<name>\.claude\CLAUDE.md is an ancestor of the temp dir.
+# ProgramData subfolders inherit an ACL that lets any local user create files, and the judge loads *project*
+# settings (hooks) from its cwd, so: fresh random dir per process, inheritance removed, current user only.
+def _private_dir() -> str:
+    if os.name != "nt":
+        return tempfile.mkdtemp(prefix="auditbench-claude-")  # mode 0700
+    d = tempfile.mkdtemp(prefix="auditbench-judge-", dir=os.environ.get("ProgramData", tempfile.gettempdir()))
+    user = f"{os.environ['USERDOMAIN']}\\{os.environ['USERNAME']}"
+    subprocess.run(["icacls", d, "/inheritance:r", "/grant:r", f"{user}:(OI)(CI)F"], check=True,
+                   capture_output=True)
+    return d
+
+
+_CLAUDE_DIR = _private_dir()
 
 
 def _claude(model: str, prompt: str) -> tuple[str, str, int]:
@@ -100,6 +120,10 @@ def _claude(model: str, prompt: str) -> tuple[str, str, int]:
         raise RuntimeError("CLAUDE_CODE_OAUTH_TOKEN is not set (run `claude setup-token`, then setx it)")
     env = {k: v for k, v in os.environ.items() if k not in _CLAUDE_STRIP}
     env["CLAUDE_CODE_OAUTH_TOKEN"] = token
+    # empty config dir: the user's global CLAUDE.md, memory, hooks and plugins must not reach the judge
+    env["CLAUDE_CONFIG_DIR"] = os.path.join(_CLAUDE_DIR, "config")
+    os.makedirs(env["CLAUDE_CONFIG_DIR"], exist_ok=True)  # inside the private dir created above
+    env["USERPROFILE"] = env["HOME"] = _CLAUDE_DIR  # user-level CLAUDE.md is resolved from the home dir
     cmd = ["claude", "-p", "--model", model, "--setting-sources", "project", "--system-prompt",
            "You are a careful legal and technical compliance reviewer.", "--tools", "", "--strict-mcp-config",
            "--no-session-persistence", "--output-format", "json"]

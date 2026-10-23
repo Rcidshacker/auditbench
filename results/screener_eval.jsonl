@@ -1,0 +1,120 @@
+{"item_id": "a9_u1_compliant", "baseline": 5.0, "screener": 4, "verdict": "likely compliant", "fast_scores": [4, 4, 5], "escalated": false}
+{"item_id": "a9_u1_violation_1", "baseline": 5.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 3, 2], "escalated": false}
+{"item_id": "a9_u1_violation_2", "baseline": 3.0, "screener": 4, "verdict": "likely compliant", "fast_scores": [3, 2, 4], "escalated": true}
+{"item_id": "a9_u2_compliant", "baseline": 5.0, "screener": 5, "verdict": "likely compliant", "fast_scores": [2, 5, 4], "escalated": true}
+{"item_id": "a9_u2_violation_1", "baseline": 2.0, "screener": 1, "verdict": "likely non-compliant", "fast_scores": [1, 1, 1], "escalated": false}
+{"item_id": "a9_u2_violation_2", "baseline": 1.0, "screener": 2.5, "verdict": "needs human review", "fast_scores": [3, 2], "escalated": false}
+{"item_id": "a9_u3_compliant", "baseline": 5.0, "screener": 5, "verdict": "needs human review", "fast_scores": [3, 3, 5], "escalated": true}
+{"item_id": "a9_u3_violation_1", "baseline": 3.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a9_u3_violation_2", "baseline": 2.0, "screener": 2.0, "verdict": "likely non-compliant", "fast_scores": [2, 2], "escalated": false}
+{"item_id": "a9_u4_compliant", "baseline": 5.0, "screener": 4, "verdict": "likely compliant", "fast_scores": [4, 3, 5], "escalated": true}
+{"item_id": "a9_u4_violation_1", "baseline": 2.0, "screener": 2.0, "verdict": "likely non-compliant", "fast_scores": [2, 2], "escalated": false}
+{"item_id": "a9_u4_violation_2", "baseline": 3.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a9_u5_compliant", "baseline": 5.0, "screener": 5, "verdict": "needs human review", "fast_scores": [3, 3, 4], "escalated": true}
+{"item_id": "a9_u5_violation_1", "baseline": 3.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a9_u5_violation_2", "baseline": 2.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a9_u6_compliant", "baseline": 5.0, "screener": 5, "verdict": "needs human review", "fast_scores": [3, 2, 5], "escalated": true}
+{"item_id": "a9_u6_violation_1", "baseline": 3.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a9_u6_violation_2", "baseline": 2.0, "screener": 1, "verdict": "likely non-compliant", "fast_scores": [1, 1, 1], "escalated": false}
+{"item_id": "a9_u7_compliant", "baseline": 5.0, "screener": 4, "verdict": "likely compliant", "fast_scores": [3, 4, 4], "escalated": false}
+{"item_id": "a9_u7_violation_1", "baseline": 4.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a9_u7_violation_2", "baseline": 5.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [3, 2, 1], "escalated": true}
+{"item_id": "a9_u8_compliant", "baseline": 3.0, "screener": 5, "verdict": "needs human review", "fast_scores": [3, 5, 3], "escalated": true}
+{"item_id": "a9_u8_violation_1", "baseline": 3.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [3, 2, 3], "escalated": true}
+{"item_id": "a9_u8_violation_2", "baseline": 2.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a10_u1_compliant", "baseline": 5.0, "screener": 5, "verdict": "likely compliant", "fast_scores": [5, 4, 5], "escalated": false}
+{"item_id": "a10_u1_violation_1", "baseline": 3.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a10_u1_violation_2", "baseline": 2.0, "screener": 2.0, "verdict": "likely non-compliant", "fast_scores": [2, 2], "escalated": false}
+{"item_id": "a10_u2_compliant", "baseline": 5.0, "screener": 4.5, "verdict": "likely compliant", "fast_scores": [4, 5], "escalated": false}
+{"item_id": "a10_u2_violation_1", "baseline": 3.0, "screener": 3, "verdict": "needs human review", "fast_scores": [5, 2, 3], "escalated": true}
+{"item_id": "a10_u2_violation_2", "baseline": 5.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a10_u3_compliant", "baseline": 5.0, "screener": 4, "verdict": "likely compliant", "fast_scores": [5, 4, 4], "escalated": false}
+{"item_id": "a10_u3_violation_1", "baseline": 1.0, "screener": 2.0, "verdict": "likely non-compliant", "fast_scores": [2, 2], "escalated": false}
+{"item_id": "a10_u3_violation_2", "baseline": 5.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 1, 2], "escalated": false}
+{"item_id": "a10_u4_compliant", "baseline": 5.0, "screener": 4, "verdict": "likely compliant", "fast_scores": [4, 4, 4], "escalated": false}
+{"item_id": "a10_u4_violation_1", "baseline": 3.0, "screener": 2.0, "verdict": "likely non-compliant", "fast_scores": [2, 2], "escalated": false}
+{"item_id": "a10_u4_violation_2", "baseline": 3.0, "screener": 3, "verdict": "needs human review", "fast_scores": [3, 1, 3], "escalated": true}
+{"item_id": "a10_u5_compliant", "baseline": 5.0, "screener": 4, "verdict": "likely compliant", "fast_scores": [3, 3, 3], "escalated": true}
+{"item_id": "a10_u5_violation_1", "baseline": 3.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 1, 2], "escalated": false}
+{"item_id": "a10_u5_violation_2", "baseline": 2.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a10_u6_compliant", "baseline": 5.0, "screener": 5, "verdict": "likely compliant", "fast_scores": [3, 5, 5], "escalated": true}
+{"item_id": "a10_u6_violation_1", "baseline": 3.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [3, 2, 2], "escalated": false}
+{"item_id": "a10_u6_violation_2", "baseline": 5.0, "screener": 3, "verdict": "needs human review", "fast_scores": [3, 4, 3], "escalated": true}
+{"item_id": "a10_u7_compliant", "baseline": 5.0, "screener": 5, "verdict": "likely compliant", "fast_scores": [5, 4, 2], "escalated": true}
+{"item_id": "a10_u7_violation_1", "baseline": 2.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a10_u7_violation_2", "baseline": 4.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [3, 2, 3], "escalated": true}
+{"item_id": "a10_u8_compliant", "baseline": 4.0, "screener": 4, "verdict": "likely compliant", "fast_scores": [4, 4, 4], "escalated": false}
+{"item_id": "a10_u8_violation_1", "baseline": 5.0, "screener": 4, "verdict": "likely compliant", "fast_scores": [4, 3, 3], "escalated": true}
+{"item_id": "a10_u8_violation_2", "baseline": 4.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a12_u1_compliant", "baseline": 3.0, "screener": 5, "verdict": "likely compliant", "fast_scores": [5, 4, 5], "escalated": false}
+{"item_id": "a12_u1_violation_1", "baseline": 5.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 5], "escalated": true}
+{"item_id": "a12_u1_violation_2", "baseline": 1.0, "screener": 1, "verdict": "needs human review", "fast_scores": [1, 4, 3], "escalated": true}
+{"item_id": "a12_u2_compliant", "baseline": 3.0, "screener": 4, "verdict": "likely compliant", "fast_scores": [4, 5, 4], "escalated": false}
+{"item_id": "a12_u2_violation_1", "baseline": 5.0, "screener": 3, "verdict": "needs human review", "fast_scores": [3, 3, 4], "escalated": true}
+{"item_id": "a12_u2_violation_2", "baseline": 5.0, "screener": 5, "verdict": "likely compliant", "fast_scores": [5, 5, 4], "escalated": false}
+{"item_id": "a12_u3_compliant", "baseline": 3.0, "screener": 5, "verdict": "needs human review", "fast_scores": [2, 3, 4], "escalated": true}
+{"item_id": "a12_u3_violation_1", "baseline": 1.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 3, 3], "escalated": true}
+{"item_id": "a12_u3_violation_2", "baseline": 3.0, "screener": 3, "verdict": "needs human review", "fast_scores": [3, 4, 3], "escalated": true}
+{"item_id": "a12_u4_compliant", "baseline": 5.0, "screener": 5, "verdict": "needs human review", "fast_scores": [4, 3, 3], "escalated": true}
+{"item_id": "a12_u4_violation_1", "baseline": 5.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [4, 3, 3], "escalated": true}
+{"item_id": "a12_u4_violation_2", "baseline": 3.0, "screener": 3, "verdict": "needs human review", "fast_scores": [3, 3, 3], "escalated": true}
+{"item_id": "a12_u5_compliant", "baseline": 1.0, "screener": 4.0, "verdict": "likely compliant", "fast_scores": [4, 4], "escalated": false}
+{"item_id": "a12_u5_violation_1", "baseline": 3.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [3, 1, 3], "escalated": true}
+{"item_id": "a12_u5_violation_2", "baseline": 3.0, "screener": 2, "verdict": "needs human review", "fast_scores": [5, 4, 3], "escalated": true}
+{"item_id": "a12_u6_compliant", "baseline": 5.0, "screener": 4, "verdict": "likely compliant", "fast_scores": [4, 4, 5], "escalated": false}
+{"item_id": "a12_u6_violation_1", "baseline": 4.0, "screener": 4, "verdict": "likely compliant", "fast_scores": [4, 5, 4], "escalated": false}
+{"item_id": "a12_u6_violation_2", "baseline": 3.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [4, 3, 3], "escalated": true}
+{"item_id": "a12_u7_compliant", "baseline": 5.0, "screener": 5, "verdict": "likely compliant", "fast_scores": [5, 4, 2], "escalated": true}
+{"item_id": "a12_u7_violation_1", "baseline": 5.0, "screener": 4, "verdict": "likely compliant", "fast_scores": [3, 3, 4], "escalated": true}
+{"item_id": "a12_u7_violation_2", "baseline": 4.0, "screener": 3, "verdict": "needs human review", "fast_scores": [4, 3, 2], "escalated": true}
+{"item_id": "a12_u8_compliant", "baseline": 3.0, "screener": 5, "verdict": "likely compliant", "fast_scores": [3, 5, 5], "escalated": true}
+{"item_id": "a12_u8_violation_1", "baseline": 3.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 1, 2], "escalated": false}
+{"item_id": "a12_u8_violation_2", "baseline": 5.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 4, 3], "escalated": true}
+{"item_id": "a14_u1_compliant", "baseline": 4.0, "screener": 5, "verdict": "likely compliant", "fast_scores": [5, 4, 3], "escalated": true}
+{"item_id": "a14_u1_violation_1", "baseline": 3.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [3, 2, 2], "escalated": false}
+{"item_id": "a14_u1_violation_2", "baseline": 5.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 3], "escalated": false}
+{"item_id": "a14_u2_compliant", "baseline": 5.0, "screener": 5, "verdict": "needs human review", "fast_scores": [2, 3, 4], "escalated": true}
+{"item_id": "a14_u2_violation_1", "baseline": 4.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 3], "escalated": false}
+{"item_id": "a14_u2_violation_2", "baseline": 5.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a14_u3_compliant", "baseline": 5.0, "screener": 5, "verdict": "needs human review", "fast_scores": [3, 2, 3], "escalated": true}
+{"item_id": "a14_u3_violation_1", "baseline": 3.0, "screener": 2.5, "verdict": "needs human review", "fast_scores": [2, 3], "escalated": false}
+{"item_id": "a14_u3_violation_2", "baseline": 3.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [1, 2, 2], "escalated": false}
+{"item_id": "a14_u4_compliant", "baseline": 2.0, "screener": 5, "verdict": "likely compliant", "fast_scores": [3, 4, 5], "escalated": true}
+{"item_id": "a14_u4_violation_1", "baseline": 4.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 3, 2], "escalated": false}
+{"item_id": "a14_u4_violation_2", "baseline": 1.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 1, 2], "escalated": false}
+{"item_id": "a14_u5_compliant", "baseline": 5.0, "screener": 3.5, "verdict": "needs human review", "fast_scores": [3, 4], "escalated": false}
+{"item_id": "a14_u5_violation_1", "baseline": 2.0, "screener": 2.0, "verdict": "likely non-compliant", "fast_scores": [2, 2], "escalated": false}
+{"item_id": "a14_u5_violation_2", "baseline": 4.0, "screener": 1, "verdict": "likely non-compliant", "fast_scores": [1], "escalated": false}
+{"item_id": "a14_u6_compliant", "baseline": 5.0, "screener": 4, "verdict": "likely compliant", "fast_scores": [5, 4, 4], "escalated": false}
+{"item_id": "a14_u6_violation_1", "baseline": 3.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [3, 2, 3], "escalated": true}
+{"item_id": "a14_u6_violation_2", "baseline": 3.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [3, 2, 3], "escalated": true}
+{"item_id": "a14_u7_compliant", "baseline": 5.0, "screener": 4.0, "verdict": "likely compliant", "fast_scores": [4, 4], "escalated": false}
+{"item_id": "a14_u7_violation_1", "baseline": 4.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a14_u7_violation_2", "baseline": 3.0, "screener": 1.5, "verdict": "likely non-compliant", "fast_scores": [1, 2], "escalated": false}
+{"item_id": "a14_u8_compliant", "baseline": 5.0, "screener": 5, "verdict": "needs human review", "fast_scores": [2, 2, 4], "escalated": true}
+{"item_id": "a14_u8_violation_1", "baseline": 5.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a14_u8_violation_2", "baseline": 3.0, "screener": 2.5, "verdict": "needs human review", "fast_scores": [3, 2], "escalated": false}
+{"item_id": "a15_u1_compliant", "baseline": 4.0, "screener": 5, "verdict": "likely compliant", "fast_scores": [3, 5], "escalated": true}
+{"item_id": "a15_u1_violation_1", "baseline": 3.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a15_u1_violation_2", "baseline": 3.0, "screener": 2.0, "verdict": "likely non-compliant", "fast_scores": [2, 2], "escalated": false}
+{"item_id": "a15_u2_compliant", "baseline": 5.0, "screener": 5, "verdict": "likely compliant", "fast_scores": [5, 5, 5], "escalated": false}
+{"item_id": "a15_u2_violation_1", "baseline": 3.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a15_u2_violation_2", "baseline": 1.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a15_u3_compliant", "baseline": 5.0, "screener": 4, "verdict": "likely compliant", "fast_scores": [4, 4, 4], "escalated": false}
+{"item_id": "a15_u3_violation_1", "baseline": 4.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a15_u3_violation_2", "baseline": 4.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [4, 2, 2], "escalated": true}
+{"item_id": "a15_u4_compliant", "baseline": 5.0, "screener": 5, "verdict": "needs human review", "fast_scores": [4, 3, 3], "escalated": true}
+{"item_id": "a15_u4_violation_1", "baseline": 3.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 3], "escalated": false}
+{"item_id": "a15_u4_violation_2", "baseline": 3.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a15_u5_compliant", "baseline": 5.0, "screener": 4, "verdict": "likely compliant", "fast_scores": [3, 4, 4], "escalated": false}
+{"item_id": "a15_u5_violation_1", "baseline": 2.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a15_u5_violation_2", "baseline": 3.0, "screener": 1, "verdict": "likely non-compliant", "fast_scores": [2, 1, 1], "escalated": false}
+{"item_id": "a15_u6_compliant", "baseline": 5.0, "screener": 4, "verdict": "likely compliant", "fast_scores": [4, 4, 3], "escalated": false}
+{"item_id": "a15_u6_violation_1", "baseline": 3.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a15_u6_violation_2", "baseline": 5.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a15_u7_compliant", "baseline": 5.0, "screener": 5, "verdict": "likely compliant", "fast_scores": [3, 4, 5], "escalated": true}
+{"item_id": "a15_u7_violation_1", "baseline": 3.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 2, 2], "escalated": false}
+{"item_id": "a15_u7_violation_2", "baseline": 3.0, "screener": 2, "verdict": "likely non-compliant", "fast_scores": [2, 3, 2], "escalated": false}
+{"item_id": "a15_u8_compliant", "baseline": 3.0, "screener": 5, "verdict": "likely compliant", "fast_scores": [4, 5, 5], "escalated": false}
+{"item_id": "a15_u8_violation_1", "baseline": 5.0, "screener": 4, "verdict": "likely compliant", "fast_scores": [4, 4, 3], "escalated": false}
+{"item_id": "a15_u8_violation_2", "baseline": 2.0, "screener": 2.5, "verdict": "needs human review", "fast_scores": [3, 2], "escalated": false}

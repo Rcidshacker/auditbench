@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AuditBench Screener</title>
+<style>
+:root{--bg:#f7f7f4;--card:#fff;--ink:#1c1d1f;--mute:#5f6368;--line:#e2e2dc;--ok:#1d7a46;--bad:#b3261e;--warn:#9a6700;--accent:#3b5bdb}
+@media (prefers-color-scheme:dark){:root{--bg:#111214;--card:#1a1b1e;--ink:#ececec;--mute:#a0a4ab;--line:#2c2e33;--ok:#4cc38a;--bad:#ff7b72;--warn:#e3b341;--accent:#91a7ff}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:1100px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:26px;margin:0 0 4px}p.sub{color:var(--mute);margin:0 0 22px;max-width:760px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}@media(max-width:860px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+label{font-weight:600;font-size:13px;color:var(--mute);display:block;margin:10px 0 6px}
+textarea{width:100%;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--ink);padding:10px;font:13px/1.45 ui-monospace,Consolas,monospace;resize:vertical}
+select,button{font:inherit;border-radius:8px;border:1px solid var(--line);padding:8px 12px;background:var(--card);color:var(--ink)}
+button.primary{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600;cursor:pointer}
+button:disabled{opacity:.6;cursor:wait}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.art{border-top:1px solid var(--line);padding:12px 0}.art:first-child{border-top:0}
+.head{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.pill{font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.v-ok{color:var(--ok)}.v-bad{color:var(--bad)}.v-warn{color:var(--warn)}.mute{color:var(--mute);font-size:13px}
+ul{margin:6px 0 0 18px;padding:0}blockquote{margin:6px 0;padding:4px 10px;border-left:3px solid var(--line);color:var(--mute);font-size:13px}
+.flag{color:var(--warn);font-size:13px;margin:4px 0}.empty{color:var(--mute);text-align:center;padding:40px 0}
+footer{margin-top:28px;color:var(--mute);font-size:12px}a{color:var(--accent)}
+</style>
+</head>
+<body>
+<main>
+  <h1>AuditBench Screener</h1>
+  <p class="sub">Pre-screen AI-system technical documentation against EU AI Act Articles 9, 10, 12, 14 and 15, the
+  high-risk requirements that apply from 2 December 2027. Each Article section is judged on its own, sampled three
+  times by NVIDIA Nemotron 3 Nano and escalated to Nemotron 3 Ultra when the samples disagree, all on Nebius Token
+  Factory. This tool helps a human reviewer: it does not give legal advice.</p>
+
+  <div class="grid">
+    <section class="card">
+      <div class="row" style="margin-top:0">
+        <select id="sample"><option value="">Load an example…</option></select>
+      </div>
+      <label for="outline">System description (optional)</label>
+      <textarea id="outline" rows="3" placeholder="What the AI system does and who uses it"></textarea>
+      <label for="doc">Technical documentation (use "Article N" headings for each section)</label>
+      <textarea id="doc" rows="18" placeholder="Paste documentation here…"></textarea>
+      <div class="row"><button class="primary" id="go">Screen documentation</button><span id="status" class="mute"></span></div>
+    </section>
+    <section class="card" id="out"><div class="empty">Results appear here, one card per Article.</div></section>
+  </div>
+
+  <footer>Method and evaluation: <a href="https://github.com/Rcidshacker/auditbench">github.com/Rcidshacker/auditbench</a>.
+  Examples adapted from AIReg-Bench (Marino et al., 2025, CC-BY-4.0).</footer>
+</main>
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let samples = [];
+fetch("/api/samples").then(r => r.json()).then(s => {
+  samples = s;
+  for (const x of s) $("#sample").insertAdjacentHTML("beforeend", `<option value="${x.id}">${esc(x.name)}</option>`);
+});
+$("#sample").onchange = e => {
+  const x = samples.find(s => s.id === e.target.value); if (!x) return;
+  $("#doc").value = x.doc; $("#outline").value = x.outline;
+};
+const cls = v => v.startsWith("likely compliant") ? "v-ok" : v.startsWith("likely non") ? "v-bad" : "v-warn";
+$("#go").onclick = async () => {
+  const doc = $("#doc").value.trim();
+  if (doc.length < 200) { $("#status").textContent = "Paste at least a few paragraphs."; return; }
+  $("#go").disabled = true; $("#status").textContent = "Screening… (about 10–30 s)";
+  try {
+    const r = await fetch("/api/screen", {method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({documentation: doc, system_outline: $("#outline").value})});
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.detail?.[0]?.msg || d.detail || r.statusText);
+    render(d); $("#status").textContent = `Done in ${d.seconds} s`;
+  } catch (e) { $("#status").textContent = "Error: " + e.message; }
+  $("#go").disabled = false;
+};
+function render(d) {
+  let h = "";
+  if (d.note) h += `<p class="flag">⚠ ${esc(d.note)}</p>`;
+  if (d.flags.length) h += `<p class="flag"><b>Flagged text (ignored by the judge):</b></p>` +
+    d.flags.map(f => `<p class="flag">• ${esc(f.type)}: “${esc(f.text)}”</p>`).join("");
+  for (const a of d.articles) {
+    h += `<div class="art"><div class="head"><b>Article ${a.article} · ${esc(a.title)}</b>
+      <span class="pill ${cls(a.verdict)}">${esc(a.verdict)}${a.score ? " · " + a.score + "/5" : ""}</span></div>`;
+    if (a.summary) h += `<div>${esc(a.summary)}</div>`;
+    if (a.fast_scores) h += `<div class="mute">Nano samples: ${a.fast_scores.join(", ")}${a.escalated ? " · escalated to Ultra" : ""}</div>`;
+    if (a.gaps?.length) h += `<ul>${a.gaps.map(g => `<li>${esc(g)}</li>`).join("")}</ul>`;
+    if (a.evidence?.length) h += a.evidence.map(e => `<blockquote>${esc(e.quote)}</blockquote>`).join("");
+    if (a.unverified_quotes) h += `<div class="mute">${a.unverified_quotes} quote(s) hidden: not found verbatim in your text.</div>`;
+    h += `</div>`;
+  }
+  $("#out").innerHTML = h;
+}
+</script>
+</body>
+</html>

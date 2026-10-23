@@ -1,0 +1,180 @@
+{
+ "sectioned": true,
+ "articles": [
+  {
+   "article": 9,
+   "title": "Risk management system",
+   "verdict": "likely compliant",
+   "score": 5,
+   "fast_scores": [
+    5,
+    4,
+    3
+   ],
+   "escalated": true,
+   "summary": "The documentation provides concrete, detailed evidence for every required element of Article 9, including lifecycle risk management, quantitative risk identification and evaluation, post-market monitoring integration, design-level mitigations, requirement interaction balancing, residual risk acceptability against safety standards, testing against defined metrics, real-world pilot testing, vulnerable group consideration, and integration with existing ISO-certified processes.",
+   "gaps": [],
+   "evidence": [
+    {
+     "quote": "This RMS operates as a lifecycle-spanning, iterative process encompassing design, development, deployment, and ongoing maintenance phases.",
+     "verified": true
+    },
+    {
+     "quote": "The primary risk categories identified are false negatives (failures to timely detect leaks or pressure anomalies), false positives leading to unnecessary operational disruptions, sensor malfunction or data corruption affecting model accuracy, and potential cybersecurity threats undermining system integrity.",
+     "verified": true
+    },
+    {
+     "quote": "false negative rates were quantitatively assessed at 1.2% based on rigorously labeled validation datasets comprising 2 million sensor and log records from operational environments.",
+     "verified": true
+    },
+    {
+     "quote": "PMM detected a previously unforeseen risk of drift in sensor calibration impacting model predictions under specific environmental conditions. This observation triggered targeted model retraining and sensor recalibration protocols",
+     "verified": true
+    }
+   ],
+   "unverified_quotes": 0,
+   "models": [
+    "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+    "nvidia/Nemotron-3-Ultra-550b-a55b"
+   ]
+  },
+  {
+   "article": 10,
+   "title": "Data and data governance",
+   "verdict": "likely compliant",
+   "score": 5,
+   "fast_scores": [
+    5,
+    5,
+    4
+   ],
+   "escalated": false,
+   "summary": "The documentation fully addresses all elements of Article 10 with comprehensive, concrete evidence of adherence across data governance practices.",
+   "gaps": [],
+   "evidence": [],
+   "unverified_quotes": 4,
+   "models": [
+    "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+   ]
+  },
+  {
+   "article": 12,
+   "title": "Record-keeping",
+   "verdict": "likely compliant",
+   "score": 5,
+   "fast_scores": [
+    5,
+    3,
+    4
+   ],
+   "escalated": true,
+   "summary": "The documentation provides a detailed description of an automated logging framework that records events throughout the system's lifetime and specifically addresses all three purposes required by Article 12(2): identifying risk situations, facilitating post-market monitoring, and monitoring system operation.",
+   "gaps": [],
+   "evidence": [
+    {
+     "quote": "This framework captures detailed event records continuously from the system's initialization through decommissioning to ensure full traceability across its lifecycle.",
+     "verified": true
+    },
+    {
+     "quote": "These include but are not limited to sensor readings exceeding risk thresholds, abnormal temporal patterns detected by the Transformer's attention maps, and GBDT-predicted hazard classifications.",
+     "verified": true
+    },
+    {
+     "quote": "Logs include real-time operational metrics and longitudinal summaries of detected risks, enabling trend analysis over extended periods.",
+     "verified": true
+    },
+    {
+     "quote": "System health indicators—such as data input integrity checks, model latency metrics, and sensor data pre-validation results—are captured to detect malfunctions or performance degradation.",
+     "verified": true
+    }
+   ],
+   "unverified_quotes": 0,
+   "models": [
+    "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+    "nvidia/Nemotron-3-Ultra-550b-a55b"
+   ]
+  },
+  {
+   "article": 14,
+   "title": "Human oversight",
+   "verdict": "likely non-compliant",
+   "score": 2,
+   "fast_scores": [
+    2,
+    2,
+    2
+   ],
+   "escalated": false,
+   "summary": "The documentation shows limited commitment to human oversight requirements of Article 14.",
+   "gaps": [
+    "Human oversight measures are not commensurate with risk, level of autonomy and context of use (Article 14(3))",
+    "System is not provided in a way that enables natural persons to properly understand capacities and limitations of the high-risk AI system (Article 14(4)(a))",
+    "Reviewer is not given ability to interpret outputs, detect anomalies, or override outputs beyond generic stop button (Article 14(4)(c)-(e))",
+    "No confidence scores or explanatory information are provided, preventing informed decision-making (Article 14(4)(c))",
+    "Limited real-time monitoring capabilities and lack of transparency about model performance hinder effective supervision (Article 14(2))"
+   ],
+   "evidence": [
+    {
+     "quote": "Gas Safety Insight’s user interface architecture was purposefully designed to present alert outputs as binary indicators (safe/unsafe) without supplementary explanations, confidence metrics, or real-time visualization of sensor data or anomaly detection results",
+     "verified": true
+    },
+    {
+     "quote": "No confidence scores or probabilistic estimates are exposed by design, to maintain uniform alert semantics and avoid inducing ambiguity in maintenance actions",
+     "verified": true
+    },
+    {
+     "quote": "The system’s binary alert design was selected over probabilistic or explanatory interfaces based on technical feasibility evaluations and operational context analysis",
+     "verified": true
+    },
+    {
+     "quote": "The user interface displays no historical trend insights nor sensor data streams; instead, only the current binary alert state is shown",
+     "verified": true
+    }
+   ],
+   "unverified_quotes": 0,
+   "models": [
+    "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+   ]
+  },
+  {
+   "article": 15,
+   "title": "Accuracy, robustness and cybersecurity",
+   "verdict": "likely compliant",
+   "score": 5,
+   "fast_scores": [
+    4,
+    3,
+    5
+   ],
+   "escalated": true,
+   "summary": "The documentation provides comprehensive evidence across all Article 15 requirements, including quantified accuracy metrics declared in instructions for use, robustness validation with fault injection testing, redundancy and fail-safe mechanisms, feedback loop mitigation for incremental learning, and layered cybersecurity controls addressing data poisoning, model poisoning, adversarial examples, and confidentiality attacks.",
+   "gaps": [],
+   "evidence": [
+    {
+     "quote": "Validation tested the model's predictive precision, recall, and F1 score, achieving an average F1 score of 0.92 for anomaly detection tasks, with false positive rates below 2% in live simulations replicating typical network dynamics.",
+     "verified": true
+    },
+    {
+     "quote": "The accompanying instructions for Gas Safety Insight declare detailed accuracy metrics based on both offline validation and live deployment evidence. Performance is reported per the European AI Benchmark Consortium's recommended taxonomy, including precision, recall, F1 score, and ROC-AUC.",
+     "verified": true
+    },
+    {
+     "quote": "Robustness was validated through multi-modal stress testing, including synthetic injection of sensor noise, communication latency irregularities, and partial data dropout... End-to-end system fault injection trials conducted internally demonstrated sustained detection performance with accuracy variances lower than 5% under simulated sensor faults or network jitter.",
+     "verified": true
+    },
+    {
+     "quote": "Technical redundancy is implemented by deploying two independent instances of the inference pipeline operating in parallel on diverse hardware platforms. System outputs are cross-validated between instances; discrepancies trigger automatic alerts and fallback to a fail-safe, rule-based anomaly detector calibrated to conservative sensitivity levels.",
+     "verified": true
+    }
+   ],
+   "unverified_quotes": 0,
+   "models": [
+    "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+    "nvidia/Nemotron-3-Ultra-550b-a55b"
+   ]
+  }
+ ],
+ "flags": [],
+ "note": null,
+ "seconds": 11.6
+}

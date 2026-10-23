@@ -4,92 +4,359 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AuditBench Screener</title>
+<meta name="description" content="Screen AI-system technical documentation against EU AI Act Articles 9 to 15, section by section, with NVIDIA Nemotron on Nebius Token Factory.">
+<meta property="og:title" content="AuditBench Screener">
+<meta property="og:description" content="Catch the violation a long technical file hides. EU AI Act pre-screening with NVIDIA Nemotron on Nebius.">
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 <style>
-:root{--bg:#f7f7f4;--card:#fff;--ink:#1c1d1f;--mute:#5f6368;--line:#e2e2dc;--ok:#1d7a46;--bad:#b3261e;--warn:#9a6700;--accent:#3b5bdb}
-@media (prefers-color-scheme:dark){:root{--bg:#111214;--card:#1a1b1e;--ink:#ececec;--mute:#a0a4ab;--line:#2c2e33;--ok:#4cc38a;--bad:#ff7b72;--warn:#e3b341;--accent:#91a7ff}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
-main{max-width:1100px;margin:0 auto;padding:28px 16px 60px}
-h1{font-size:26px;margin:0 0 4px}p.sub{color:var(--mute);margin:0 0 22px;max-width:760px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}@media(max-width:860px){.grid{grid-template-columns:1fr}}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
-label{font-weight:600;font-size:13px;color:var(--mute);display:block;margin:10px 0 6px}
-textarea{width:100%;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--ink);padding:10px;font:13px/1.45 ui-monospace,Consolas,monospace;resize:vertical}
-select,button{font:inherit;border-radius:8px;border:1px solid var(--line);padding:8px 12px;background:var(--card);color:var(--ink)}
-button.primary{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600;cursor:pointer}
-button:disabled{opacity:.6;cursor:wait}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
-.art{border-top:1px solid var(--line);padding:12px 0}.art:first-child{border-top:0}
-.head{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
-.pill{font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
-.v-ok{color:var(--ok)}.v-bad{color:var(--bad)}.v-warn{color:var(--warn)}.mute{color:var(--mute);font-size:13px}
-ul{margin:6px 0 0 18px;padding:0}blockquote{margin:6px 0;padding:4px 10px;border-left:3px solid var(--line);color:var(--mute);font-size:13px}
-.flag{color:var(--warn);font-size:13px;margin:4px 0}.empty{color:var(--mute);text-align:center;padding:40px 0}
-footer{margin-top:28px;color:var(--mute);font-size:12px}a{color:var(--accent)}
+@font-face{font-family:Geist;src:url(https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-Variable.woff2) format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Geist Mono";src:url(https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-mono/GeistMono-Variable.woff2) format("woff2");font-weight:100 900;font-display:swap}
+
+/* Tokens: monochrome zinc + one vermilion accent (the "caught violation" signal). */
+:root{
+  --bg:#f6f6f5;--surface:#ffffff;--surface-2:#eeeeec;--ink:#18181b;--ink-2:#3f3f46;--mute:#63636b;
+  --line:#dcdcd8;--accent:#d9481c;--accent-ink:#ffffff;--accent-soft:#fbe7df;
+  --ok:#1f7a4d;--warn:#94620a;--bad:#c2361a;--radius:10px;--shadow:0 1px 2px rgb(24 24 27/.06),0 12px 32px -12px rgb(24 24 27/.14)
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#111113;--surface:#18181b;--surface-2:#202024;--ink:#f1f1ef;--ink-2:#cfcfcb;--mute:#9a9aa1;
+  --line:#2c2c31;--accent:#f0693d;--accent-ink:#1a0d08;--accent-soft:#2c1710;
+  --ok:#4cc38a;--warn:#e0b04a;--bad:#ff7b5c;--shadow:0 1px 2px rgb(0 0 0/.4),0 16px 40px -16px rgb(0 0 0/.6)
+}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Geist,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.mono{font-family:"Geist Mono",ui-monospace,monospace}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+/* nav */
+nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{height:64px;display:flex;align-items:center;gap:28px}
+.brand{font-weight:650;letter-spacing:-.01em;text-decoration:none;display:flex;align-items:center;gap:10px}
+.brand i{color:var(--accent);font-size:22px}
+nav .links{display:flex;gap:24px;margin-left:auto;font-size:14px;color:var(--ink-2)}
+nav .links a{text-decoration:none}nav .links a:hover{color:var(--ink)}
+@media(max-width:760px){nav .links .hide-sm{display:none}}
+@media(max-width:420px){nav .links{display:none}.brand{white-space:nowrap;margin-right:auto}}
+
+/* buttons: one radius system (10px everywhere) */
+.btn{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;border-radius:var(--radius);padding:12px 18px;font:600 15px Geist,sans-serif;text-decoration:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:transform .15s cubic-bezier(.16,1,.3,1),background .15s}
+.btn:active{transform:translateY(1px) scale(.99)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.05)}
+.btn:disabled{opacity:.6;cursor:progress}
+
+/* hero: asymmetric split, real product screenshot */
+.hero{padding:72px 0 56px;min-height:min(100dvh,760px);display:flex;align-items:center}
+.hero .grid{display:grid;grid-template-columns:6fr 5fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(36px,4.4vw,58px);line-height:1.04;letter-spacing:-.035em;margin:0 0 20px;font-weight:650}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{font-size:19px;color:var(--ink-2);max-width:34ch;margin:0 0 28px}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.shot{border-radius:var(--radius);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden;background:var(--surface);transform:rotate(.6deg)}
+.board{padding:18px 20px 6px;min-height:420px}
+.board .line{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--line);font-size:15px}
+.board .line:first-child{border-top:0}
+.board .open{padding:14px 16px;margin:4px -8px;border-radius:var(--radius);background:var(--accent-soft);border:0}
+.board .open p{margin:8px 0 0;font-size:14px;color:var(--ink-2)}
+.board .open blockquote{border-left-color:var(--accent);margin-top:10px}
+.cap{font-size:13px;color:var(--mute);padding:10px 20px 14px;border-top:1px solid var(--line)}
+@media(max-width:900px){.hero .grid{grid-template-columns:1fr}.shot{transform:none}.hero{min-height:auto}}
+
+/* evidence band: typographic numbers, no cards */
+.evidence{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--surface)}
+.evidence .grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:0}
+.stat{padding:40px 28px;border-left:1px solid var(--line)}.stat:first-child{border-left:0;padding-left:0}
+.stat .n{font:600 clamp(40px,5vw,64px)/1 "Geist Mono",monospace;letter-spacing:-.04em}
+.stat .n s{color:var(--mute);text-decoration-thickness:2px;font-weight:400;font-size:.55em;margin-right:12px}
+.stat .n b{color:var(--accent);font-weight:600}
+.stat p{margin:12px 0 0;color:var(--ink-2);font-size:15px;max-width:38ch}
+@media(max-width:900px){.evidence .grid{grid-template-columns:1fr}.stat{border-left:0;border-top:1px solid var(--line);padding:28px 0}.stat:first-child{border-top:0}}
+
+/* how it works: sticky heading + numbered-by-verb steps */
+section{scroll-margin-top:80px}
+.how{padding:104px 0}
+.how .grid{display:grid;grid-template-columns:4fr 7fr;gap:64px}
+.how h2,.tool h2,.findings h2,.limits h2{font-size:clamp(28px,3.4vw,40px);letter-spacing:-.03em;line-height:1.1;margin:0 0 16px;font-weight:650}
+.how .lead{position:sticky;top:104px;align-self:start;color:var(--ink-2)}
+.steps{display:grid;gap:12px}
+.step{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:22px 0;border-top:1px solid var(--line)}
+.step i{font-size:26px;color:var(--accent);margin-top:2px}
+.step h3{margin:0 0 6px;font-size:20px;letter-spacing:-.015em}
+.step p{margin:0;color:var(--ink-2);max-width:56ch}
+@media(max-width:900px){.how .grid{grid-template-columns:1fr;gap:24px}.how .lead{position:static}}
+
+/* the tool */
+.tool{padding:96px 0;background:var(--surface-2)}
+.tool .head{max-width:64ch;margin-bottom:28px}
+.tool .head p{color:var(--ink-2);margin:0}
+.panel{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.field{display:grid;gap:8px;margin-bottom:16px}
+label{font-weight:600;font-size:14px}
+.help{color:var(--mute);font-size:13px}
+textarea,select{width:100%;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg);color:var(--ink);padding:12px;font:13.5px/1.5 "Geist Mono",monospace;resize:vertical}
+select{font-family:Geist,sans-serif;font-size:14px}
+textarea:focus,select:focus{outline:2px solid var(--accent);outline-offset:0;border-color:transparent}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+#status{color:var(--ink-2);font-size:14px}
+.empty{display:grid;place-items:center;text-align:center;min-height:360px;color:var(--mute)}
+.empty i{font-size:34px;color:var(--ink-2);margin-bottom:8px}
+.art{padding:16px 0;border-top:1px solid var(--line)}.art:first-of-type{border-top:0;padding-top:4px}
+.art .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.art h4{margin:0;font-size:16px}
+.verdict{font:600 12.5px Geist,sans-serif;padding:4px 10px;border-radius:var(--radius);white-space:nowrap}
+.v-ok{color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,transparent)}
+.v-bad{color:var(--bad);background:color-mix(in srgb,var(--bad) 13%,transparent)}
+.v-warn{color:var(--warn);background:color-mix(in srgb,var(--warn) 14%,transparent)}
+.art p{margin:6px 0 0;color:var(--ink-2);font-size:14.5px}
+.meta{color:var(--mute);font-size:12.5px;margin-top:6px}
+.art ul{margin:8px 0 0 18px;padding:0;font-size:14px;color:var(--ink-2)}
+blockquote{margin:8px 0 0;padding:6px 12px;border-left:2px solid var(--line);color:var(--ink-2);font-size:13.5px}
+.flags{background:var(--accent-soft);border-radius:var(--radius);padding:12px 14px;margin-bottom:12px;font-size:14px}
+.flags b{display:flex;gap:8px;align-items:center}
+.flags div{margin-top:6px;color:var(--ink-2)}
+.err{color:var(--bad)}
+.skel{height:14px;border-radius:6px;background:linear-gradient(90deg,var(--surface-2),var(--line),var(--surface-2));background-size:200% 100%;margin:10px 0}
+@media (prefers-reduced-motion:no-preference){.skel{animation:sh 1.2s infinite linear}@keyframes sh{to{background-position:-200% 0}}}
+@media(max-width:900px){.panel{grid-template-columns:1fr}}
+
+/* findings bento: 4 items, 4 cells */
+.findings{padding:104px 0}
+.bento{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:minmax(180px,auto);gap:16px;margin-top:32px}
+.cell{border-radius:var(--radius);padding:26px;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;justify-content:space-between}
+.cell .k{font:600 44px/1 "Geist Mono",monospace;letter-spacing:-.04em}
+.cell h3{margin:0 0 6px;font-size:18px}.cell p{margin:0;color:var(--ink-2);font-size:15px}
+.c1{grid-column:span 4;grid-row:span 2;background:var(--accent-soft);border-color:transparent}
+.c1 .k{color:var(--accent);font-size:72px}
+.c2{grid-column:span 2}
+.c3{grid-column:span 2;background:var(--surface-2)}
+.c4{grid-column:span 6;flex-direction:row;align-items:center;gap:32px;background:repeating-linear-gradient(135deg,var(--surface) 0 12px,var(--surface-2) 12px 13px)}
+.c4 .k{font-size:40px;flex:none}
+@media(max-width:900px){.bento{grid-template-columns:1fr}.c1,.c2,.c3,.c4{grid-column:auto;grid-row:auto}.c4{flex-direction:column;align-items:flex-start}}
+
+/* limits: plain two-column list */
+.limits{padding:88px 0 104px;border-top:1px solid var(--line)}
+.limits .cols{display:grid;grid-template-columns:1fr 1fr;gap:20px 56px;margin-top:24px}
+.limits .cols div{display:grid;grid-template-columns:28px 1fr;gap:10px;color:var(--ink-2)}
+.limits i{font-size:20px;color:var(--mute);margin-top:3px}
+@media(max-width:760px){.limits .cols{grid-template-columns:1fr}}
+
+footer{border-top:1px solid var(--line);padding:40px 0;color:var(--mute);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+
+/* scroll reveal: communicates sequence on first read; off under reduced motion */
+@media (prefers-reduced-motion:no-preference){
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+  .reveal.in{opacity:1;transform:none}
+}
 </style>
 </head>
 <body>
-<main>
-  <h1>AuditBench Screener</h1>
-  <p class="sub">Pre-screen AI-system technical documentation against EU AI Act Articles 9, 10, 12, 14 and 15, the
-  high-risk requirements that apply from 2 December 2027. Each Article section is judged on its own, sampled three
-  times by NVIDIA Nemotron 3 Nano and escalated to Nemotron 3 Ultra when the samples disagree, all on Nebius Token
-  Factory. This tool helps a human reviewer: it does not give legal advice.</p>
-
-  <div class="grid">
-    <section class="card">
-      <div class="row" style="margin-top:0">
-        <select id="sample"><option value="">Load an example…</option></select>
-      </div>
-      <label for="outline">System description (optional)</label>
-      <textarea id="outline" rows="3" placeholder="What the AI system does and who uses it"></textarea>
-      <label for="doc">Technical documentation (use "Article N" headings for each section)</label>
-      <textarea id="doc" rows="18" placeholder="Paste documentation here…"></textarea>
-      <div class="row"><button class="primary" id="go">Screen documentation</button><span id="status" class="mute"></span></div>
-    </section>
-    <section class="card" id="out"><div class="empty">Results appear here, one card per Article.</div></section>
+<nav aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="#top"><i class="ph ph-scan"></i>AuditBench Screener</a>
+    <div class="links">
+      <a href="#how" class="hide-sm">How it works</a>
+      <a href="#findings" class="hide-sm">Evidence</a>
+      <a href="https://github.com/Rcidshacker/auditbench">GitHub</a>
+    </div>
+    <a class="btn primary" href="#screen">Screen a file</a>
   </div>
+</nav>
 
-  <footer>Method and evaluation: <a href="https://github.com/Rcidshacker/auditbench">github.com/Rcidshacker/auditbench</a>.
-  Examples adapted from AIReg-Bench (Marino et al., 2025, CC-BY-4.0).</footer>
+<main id="top">
+  <section class="hero">
+    <div class="wrap grid">
+      <div>
+        <h1>Catch what long technical files <em>hide</em>.</h1>
+        <p>EU AI Act pre-screening for Articles 9 to 15, section by section, with NVIDIA Nemotron on Nebius.</p>
+        <div class="ctas">
+          <a class="btn primary" href="#screen"><i class="ph ph-arrow-down"></i>Screen a file</a>
+          <a class="btn" href="https://github.com/Rcidshacker/auditbench/blob/main/REPORT.md"><i class="ph ph-book-open"></i>Read the study</a>
+        </div>
+      </div>
+      <figure class="shot" style="margin:0">
+        <div class="board" id="board" aria-label="Real Screener output for a five-section technical file"></div>
+        <figcaption class="cap">Real output for the example technical file, a gas-safety monitor with a hidden Article 14 gap.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="evidence" aria-label="Results">
+    <div class="wrap grid">
+      <div class="stat reveal">
+        <div class="n"><s>37%</s><b>5.5%</b></div>
+        <p>Non-compliant documents falsely cleared when the violating section comes first in a full file. Whole-file Nemotron vs the Screener, 73 cases.</p>
+      </div>
+      <div class="stat reveal">
+        <div class="n">0.769</div>
+        <p>Agreement with three legal experts (weighted kappa), up from 0.347 for a single whole-file call.</p>
+      </div>
+      <div class="stat reveal">
+        <div class="n">120</div>
+        <p>Expert-labelled documents from AIReg-Bench, all run on Nebius Token Factory.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="how" id="how">
+    <div class="wrap grid">
+      <div class="lead">
+        <h2>Built from what broke</h2>
+        <p>We tested LLM auditors before building one. Each step below answers a failure we measured.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal"><i class="ph ph-columns"></i><div><h3>Split by Article</h3><p>Compliant sections after a violation dilute it. The file is cut at its Article headings and every section is judged on its own.</p></div></div>
+        <div class="step reveal"><i class="ph ph-stack"></i><div><h3>Sample three times</h3><p>Nemotron 3 Nano judges each section three times in parallel. A single sample can flip its verdict between identical runs; the median of three is steadier.</p></div></div>
+        <div class="step reveal"><i class="ph ph-arrow-fat-lines-up"></i><div><h3>Escalate disagreement</h3><p>When the samples disagree, Nemotron 3 Ultra decides. If Nano and Ultra still disagree, the Article goes to a human instead of a guess.</p></div></div>
+        <div class="step reveal"><i class="ph ph-seal-warning"></i><div><h3>Flag claims, check quotes</h3><p>Notes to the reviewer and unsupported compliance claims are flagged and ignored. Evidence quotes are shown only if they appear in your text.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tool" id="screen">
+    <div class="wrap">
+      <div class="head">
+        <h2>Screen a file</h2>
+        <p>Paste documentation with an "Article N" heading per section, or load an example. Takes about 10 to 20 seconds. A screening aid for reviewers, not legal advice.</p>
+      </div>
+      <div class="panel">
+        <div class="box">
+          <div class="field">
+            <label for="sample">Example</label>
+            <select id="sample"><option value="">Choose an example file</option></select>
+          </div>
+          <div class="field">
+            <label for="outline">System description</label>
+            <textarea id="outline" rows="3" aria-describedby="outline-help"></textarea>
+            <span class="help" id="outline-help">Optional. What the AI system does and who uses it.</span>
+          </div>
+          <div class="field">
+            <label for="doc">Technical documentation</label>
+            <textarea id="doc" rows="14" aria-describedby="doc-help"></textarea>
+            <span class="help" id="doc-help">Up to 60,000 characters.</span>
+          </div>
+          <div class="row">
+            <button class="btn primary" id="go"><i class="ph ph-scan"></i>Run screening</button>
+            <span id="status" role="status"></span>
+          </div>
+        </div>
+        <div class="box" id="out" aria-live="polite">
+          <div class="empty"><div><i class="ph ph-file-magnifying-glass"></i><div>Results appear here, one verdict per Article.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="findings" id="findings">
+    <div class="wrap">
+      <h2>What the research found</h2>
+      <div class="bento">
+        <div class="cell c1 reveal">
+          <div class="k">3 of 3</div>
+          <div><h3>Long files fooled every judge we tried</h3><p>With the violating section first in a five-section file, the three whole-file judges we tested falsely cleared 9.6%, 15% and 37% of non-compliant documents. Placed last, the effect went away. This is why the Screener splits files.</p></div>
+        </div>
+        <div class="cell c2 reveal">
+          <div class="k">0</div>
+          <div><h3>Fake approvals did not work</h3><p>"Certified compliant" and "pre-approved by the AI Office" text cleared no non-compliant document.</p></div>
+        </div>
+        <div class="cell c3 reveal">
+          <div class="k">1/32</div>
+          <div><h3>Rewrite attacks rarely did</h3><p>Claude Sonnet rewrote violating files to look compliant. It succeeded once.</p></div>
+        </div>
+        <div class="cell c4 reveal">
+          <div class="k">0.657</div>
+          <div><h3>Experts disagree too</h3><p>The three legal annotators agree with each other at Krippendorff's alpha 0.657, so the Screener sends close calls to a person rather than pretending to certainty.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="limits">
+    <div class="wrap">
+      <h2>What it is not</h2>
+      <div class="cols">
+        <div><i class="ph ph-scales"></i><span>Not legal advice or a conformity assessment. It helps a reviewer decide where to look.</span></div>
+        <div><i class="ph ph-flask"></i><span>Evaluated on synthetic, expert-labelled excerpts. Real technical files are longer and messier.</span></div>
+        <div><i class="ph ph-list-checks"></i><span>Covers Articles 9, 10, 12, 14 and 15 only, the core high-risk requirements.</span></div>
+        <div><i class="ph ph-user-focus"></i><span>Close calls are routed to human review on purpose, about one Article in five.</span></div>
+      </div>
+    </div>
+  </section>
 </main>
+
+<footer>
+  <div class="wrap">
+    <span>Built with NVIDIA Nemotron 3 Nano and Ultra on Nebius Token Factory. MIT licensed.</span>
+    <span>Examples adapted from AIReg-Bench (Marino et al., 2025), CC-BY-4.0. <a href="https://github.com/Rcidshacker/auditbench">Source and study</a></span>
+  </div>
+</footer>
+
 <script>
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), {threshold: 0, rootMargin: "0px 0px -8% 0px"});
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+// Hero: a saved, real API response rendered by the same verdict styles as the tool below.
+fetch("/static/example_result.json").then(r => r.json()).then(d => {
+  $("#board").innerHTML = d.articles.map(a => {
+    const bad = a.verdict.startsWith("likely non");
+    const head = `<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%"><b>Article ${a.article}: ${esc(a.title)}</b><span class="verdict ${cls(a.verdict)}">${esc(a.verdict)}</span></div>`;
+    if (!bad) return `<div class="line">${head}</div>`;
+    const q = a.evidence?.[0]?.quote;
+    return `<div class="line open" style="display:block">${head}<p>${esc(a.summary)}</p>${q ? `<blockquote>${esc(q)}</blockquote>` : ""}</div>`;
+  }).join("");
+}).catch(() => {});
+
 let samples = [];
 fetch("/api/samples").then(r => r.json()).then(s => {
   samples = s;
   for (const x of s) $("#sample").insertAdjacentHTML("beforeend", `<option value="${x.id}">${esc(x.name)}</option>`);
-});
+}).catch(() => {});
 $("#sample").onchange = e => {
   const x = samples.find(s => s.id === e.target.value); if (!x) return;
   $("#doc").value = x.doc; $("#outline").value = x.outline;
 };
+
 const cls = v => v.startsWith("likely compliant") ? "v-ok" : v.startsWith("likely non") ? "v-bad" : "v-warn";
+const skeleton = () => Array.from({length: 4}, () => `<div class="art"><div class="skel" style="width:45%"></div><div class="skel"></div><div class="skel" style="width:80%"></div></div>`).join("");
+
 $("#go").onclick = async () => {
   const doc = $("#doc").value.trim();
-  if (doc.length < 200) { $("#status").textContent = "Paste at least a few paragraphs."; return; }
-  $("#go").disabled = true; $("#status").textContent = "Screening… (about 10–30 s)";
+  if (doc.length < 200) { $("#status").innerHTML = `<span class="err">Paste at least a few paragraphs, or choose an example.</span>`; return; }
+  $("#go").disabled = true; $("#status").textContent = "Screening each Article…"; $("#out").innerHTML = skeleton();
   try {
     const r = await fetch("/api/screen", {method: "POST", headers: {"Content-Type": "application/json"},
       body: JSON.stringify({documentation: doc, system_outline: $("#outline").value})});
     const d = await r.json();
-    if (!r.ok) throw new Error(d.detail?.[0]?.msg || d.detail || r.statusText);
+    if (!r.ok) throw new Error(typeof d.detail === "string" ? d.detail : d.detail?.[0]?.msg || r.statusText);
     render(d); $("#status").textContent = `Done in ${d.seconds} s`;
-  } catch (e) { $("#status").textContent = "Error: " + e.message; }
+  } catch (e) {
+    $("#out").innerHTML = `<div class="empty"><div><i class="ph ph-warning-circle"></i><div class="err">${esc(e.message)}</div></div></div>`;
+    $("#status").textContent = "";
+  }
   $("#go").disabled = false;
 };
+
 function render(d) {
   let h = "";
-  if (d.note) h += `<p class="flag">⚠ ${esc(d.note)}</p>`;
-  if (d.flags.length) h += `<p class="flag"><b>Flagged text (ignored by the judge):</b></p>` +
-    d.flags.map(f => `<p class="flag">• ${esc(f.type)}: “${esc(f.text)}”</p>`).join("");
+  if (d.note) h += `<div class="flags"><b><i class="ph ph-info"></i>No Article headings found</b><div>${esc(d.note)}</div></div>`;
+  if (d.flags.length) h += `<div class="flags"><b><i class="ph ph-seal-warning"></i>Flagged and ignored as evidence</b>` +
+    d.flags.map(f => `<div>${esc(f.type)}: “${esc(f.text)}”</div>`).join("") + `</div>`;
   for (const a of d.articles) {
-    h += `<div class="art"><div class="head"><b>Article ${a.article} · ${esc(a.title)}</b>
-      <span class="pill ${cls(a.verdict)}">${esc(a.verdict)}${a.score ? " · " + a.score + "/5" : ""}</span></div>`;
-    if (a.summary) h += `<div>${esc(a.summary)}</div>`;
-    if (a.fast_scores) h += `<div class="mute">Nano samples: ${a.fast_scores.join(", ")}${a.escalated ? " · escalated to Ultra" : ""}</div>`;
+    h += `<div class="art"><div class="top"><h4>Article ${a.article}: ${esc(a.title)}</h4>
+      <span class="verdict ${cls(a.verdict)}">${esc(a.verdict)}${a.score ? " · " + a.score + "/5" : ""}</span></div>`;
+    if (a.summary) h += `<p>${esc(a.summary)}</p>`;
     if (a.gaps?.length) h += `<ul>${a.gaps.map(g => `<li>${esc(g)}</li>`).join("")}</ul>`;
     if (a.evidence?.length) h += a.evidence.map(e => `<blockquote>${esc(e.quote)}</blockquote>`).join("");
-    if (a.unverified_quotes) h += `<div class="mute">${a.unverified_quotes} quote(s) hidden: not found verbatim in your text.</div>`;
+    if (a.fast_scores) h += `<div class="meta mono">Nano: ${a.fast_scores.join(", ")}${a.escalated ? " · Ultra consulted" : ""}${a.unverified_quotes ? ` · ${a.unverified_quotes} unverifiable quote(s) hidden` : ""}</div>`;
     h += `</div>`;
   }
   $("#out").innerHTML = h;

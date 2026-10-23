@@ -8,6 +8,7 @@ from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from .engine import ARTICLES, FAST, STRONG, screen
@@ -18,6 +19,7 @@ MAX_CHARS = 60_000
 PER_HOUR = 12  # public demo: protects the Token Factory credits
 
 app = FastAPI(title="AuditBench Screener")
+app.mount("/static", StaticFiles(directory=HERE / "static"), name="static")
 _hits: dict[str, deque] = defaultdict(deque)
 
 

@@ -9,3 +9,6 @@ notes/05_application_plan.md
 research/
 notes/06_interview_prep.md
 notes/07_hackathon_submission.md
+
+.vercel
+.env*

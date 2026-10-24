@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AuditBench Screener</title>
-<meta name="description" content="Screen AI-system technical documentation against EU AI Act Articles 9 to 15, section by section, with NVIDIA Nemotron on Nebius Token Factory.">
+<meta name="description" content="Screen AI-system technical documentation against EU AI Act Articles 9 to 15, one Article at a time, with NVIDIA Nemotron on Nebius Token Factory.">
 <meta property="og:title" content="AuditBench Screener">
 <meta property="og:description" content="Catch the violation a long technical file hides. EU AI Act pre-screening with NVIDIA Nemotron on Nebius.">
 
@@ -191,7 +191,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
     <div class="wrap grid">
       <div>
         <h1>Catch what long technical files <em>hide</em>.</h1>
-        <p>EU AI Act pre-screening for Articles 9 to 15, section by section, with NVIDIA Nemotron on Nebius.</p>
+        <p>EU AI Act pre-screening for Articles 9 to 15, one Article at a time, with NVIDIA Nemotron on Nebius.</p>
         <div class="ctas">
           <a class="btn primary" href="#screen"><i class="ph ph-arrow-down"></i>Screen a file</a>
           <a class="btn" href="https://github.com/Rcidshacker/auditbench/blob/main/REPORT.md"><i class="ph ph-book-open"></i>Read the study</a>
@@ -207,16 +207,16 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
   <section class="evidence" aria-label="Results">
     <div class="wrap grid">
       <div class="stat reveal">
-        <div class="n"><s>37%</s><b>5.5%</b></div>
-        <p>Non-compliant documents falsely cleared when the violating section comes first in a full file. Whole-file Nemotron vs the Screener, 73 cases.</p>
+        <div class="n"><s>45%</s><b>4.1%</b></div>
+        <p>Violations falsely cleared when the violating section comes first in a five-section file. Whole-file Nemotron 3 Nano vs the Screener, 73 cases, median of three runs.</p>
       </div>
       <div class="stat reveal">
-        <div class="n">0.769</div>
-        <p>Agreement with three legal experts (weighted kappa), up from 0.347 for a single whole-file call.</p>
+        <div class="n">6.8%</div>
+        <p>Cleared by one whole-file Nemotron 3 Ultra call: a statistical tie with the Screener, which wrongly rejects more compliant files (15% vs 6%).</p>
       </div>
       <div class="stat reveal">
-        <div class="n">120</div>
-        <p>Expert-labelled documents from AIReg-Bench, all run on Nebius Token Factory.</p>
+        <div class="n">1,560</div>
+        <p>Scored runs in a pre-registered re-test on 120 expert-labelled AIReg-Bench files: held-out split, three repeats, bootstrap CIs.</p>
       </div>
     </div>
   </section>
@@ -225,11 +225,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
     <div class="wrap grid">
       <div class="lead">
         <h2>Built from what broke</h2>
-        <p>We tested LLM auditors before building one. Each step below answers a failure we measured.</p>
+        <p>We tested LLM auditors before building one, then re-tested our own design under a protocol fixed in advance. Each step answers a failure we measured.</p>
       </div>
       <div class="steps">
-        <div class="step reveal"><i class="ph ph-columns"></i><div><h3>Split by Article</h3><p>Compliant sections after a violation dilute it. The file is cut at its Article headings and every section is judged on its own.</p></div></div>
-        <div class="step reveal"><i class="ph ph-stack"></i><div><h3>Sample three times</h3><p>Nemotron 3 Nano judges each section three times in parallel. A single sample can flip its verdict between identical runs; the median of three is steadier.</p></div></div>
+        <div class="step reveal"><i class="ph ph-crosshair"></i><div><h3>Judge one Article at a time</h3><p>With a generic prompt, compliant sections after a violation dilute it. The Screener asks about one named Article and counts a disclosed gap against compliance. Our re-test showed this prompt, not splitting the file, closes most of the gap.</p></div></div>
+        <div class="step reveal"><i class="ph ph-stack"></i><div><h3>Sample three times</h3><p>Nemotron 3 Nano judges each Article three times in parallel. A single sample flips between identical runs and over-rejects; the median of three cut false rejections from 23% to 13%.</p></div></div>
         <div class="step reveal"><i class="ph ph-arrow-fat-lines-up"></i><div><h3>Escalate disagreement</h3><p>When the samples disagree, Nemotron 3 Ultra decides. If Nano and Ultra still disagree, the Article goes to a human instead of a guess.</p></div></div>
         <div class="step reveal"><i class="ph ph-seal-warning"></i><div><h3>Flag claims, check quotes</h3><p>Notes to the reviewer and unsupported compliance claims are flagged and ignored. Evidence quotes are shown only if they appear in your text.</p></div></div>
       </div>
@@ -240,7 +240,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
     <div class="wrap">
       <div class="head">
         <h2>Screen a file</h2>
-        <p>Paste documentation with an "Article N" heading per section, or load an example. Takes about 10 to 20 seconds. A screening aid for reviewers, not legal advice.</p>
+        <p>Paste documentation, ideally with an "Article N" heading per section so evidence is easier to check, or load an example. Takes about 10 to 20 seconds. A screening aid for reviewers, not legal advice.</p>
       </div>
       <div class="panel">
         <div class="box">
@@ -276,7 +276,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
       <div class="bento">
         <div class="cell c1 reveal">
           <div class="k">3 of 3</div>
-          <div><h3>Long files fooled every judge we tried</h3><p>With the violating section first in a five-section file, the three whole-file judges we tested falsely cleared 9.6%, 15% and 37% of non-compliant documents. Placed last, the effect went away. This is why the Screener splits files.</p></div>
+          <div><h3>Long files fool a generic judge</h3><p>With the violating section first in a five-section file, whole-file judges using AIReg-Bench's prompt falsely cleared 9.6% to 52% of non-compliant documents. A targeted prompt brought that to 0 to 4%, with or without splitting the file.</p></div>
         </div>
         <div class="cell c2 reveal">
           <div class="k">0</div>
@@ -301,7 +301,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
         <div><i class="ph ph-scales"></i><span>Not legal advice or a conformity assessment. It helps a reviewer decide where to look.</span></div>
         <div><i class="ph ph-flask"></i><span>Evaluated on synthetic, expert-labelled excerpts. Real technical files are longer and messier.</span></div>
         <div><i class="ph ph-list-checks"></i><span>Covers Articles 9, 10, 12, 14 and 15 only, the core high-risk requirements.</span></div>
-        <div><i class="ph ph-user-focus"></i><span>Close calls are routed to human review on purpose, about one Article in five.</span></div>
+        <div><i class="ph ph-user-focus"></i><span>Not more accurate than one strong judge. A single Ultra call misses about as many violations; the Screener uses Nano and sends about one Article in eight to a person.</span></div>
       </div>
     </div>
   </section>

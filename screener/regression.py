@@ -41,7 +41,7 @@ def doc_for(it, cond: str) -> str:
 def check(case) -> dict:
     cid, iid, cond, expect = case
     it = ITEMS[iid]
-    r = screen(doc_for(it, cond), it.system_outline, articles=[it.article])
+    r = screen(doc_for(it, cond), it.system_outline, articles=[it.article], segment_headless=True)
     v = r["articles"][0]["verdict"]
     caught = v in ("likely non-compliant", "needs human review")  # "no section found" is not a pass
     ok = {"not_cleared": caught,

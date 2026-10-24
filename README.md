@@ -77,7 +77,7 @@ flowchart LR
 
 | Step | The failure it fixes |
 |---|---|
-| **Judge one Article at a time** | Whole-file judges with a generic prompt let compliant sections mask a violation. The v2 re-test shows a targeted prompt is what closes this; splitting by heading adds little (files without headings are split by Nemotron Ultra). |
+| **Judge one Article at a time** | Whole-file judges with a generic prompt let compliant sections mask a violation. The v2 re-test shows a targeted prompt is what closes this; splitting by heading adds little. Files without headings are judged as whole text (an Ultra segmenter exists, opt-in, and did not help). |
 | **Sample three times** | A single LLM sample can flip its verdict between identical runs. |
 | **Escalate to Ultra, then to a human** | Even three legal experts only partly agree (Krippendorff's α 0.657). Close calls go to a person instead of a guess. |
 | **Flag claims, check quotes** | Reviewer-addressed notes are flagged and ignored. Evidence quotes appear only if they occur (near-)verbatim in the document. |

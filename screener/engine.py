@@ -181,11 +181,12 @@ def _safe(fn, *a):
         return None
 
 
-def screen(doc: str, outline: str = "", articles: list[int] | None = None) -> dict:
-    """Screen a technical file. Sections are found by Article headings, else by the segmenter; if both fail the
-    whole text is assessed against each requested Article (less reliable, reported as such)."""
+def screen(doc: str, outline: str = "", articles: list[int] | None = None, segment_headless: bool = False) -> dict:
+    """Screen a technical file. Sections are found by Article headings; without them the whole text is assessed
+    against each requested Article. The Ultra segmenter is opt-in: in the v2 re-test it did not reduce false
+    clearance (REPORT.md §1c), so the live app does not use it."""
     sections = split_sections(doc)
-    segmented = not sections
+    segmented = not sections and segment_headless
     if segmented:
         sections = _safe(segment, doc) or {}
     sectioned = bool(sections)
@@ -201,5 +202,6 @@ def screen(doc: str, outline: str = "", articles: list[int] | None = None) -> di
             "note": ("No Article headings found, so sections were assigned to Articles by the model. Check the split; "
                      "'Article N' headings give the most reliable result." if segmented and sectioned else
                      None if sectioned else
-                     "No Article sections could be found, so each Article was judged against the whole text. Our tests "
-                     "show long multi-section files hide violations; add 'Article N' headings for a reliable result.")}
+                     "No Article headings found, so each Article was judged against the whole text. In our re-test this "
+                     "was about as reliable as per-section judging; 'Article N' headings make the quoted evidence "
+                     "easier to check.")}

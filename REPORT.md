@@ -83,8 +83,14 @@ Factory, no failed jobs. Brackets are 95% item-bootstrap CIs; the cluster bootst
 **What changes in the claims.** Still supported: on long files a whole-file Nano judge with the AIReg-Bench prompt
 misses about half of violations, and the Screener misses about 4%. No longer supported: "splitting by Article is the
 fix", and "the Screener beats a strong single judge". The honest pitch is a cheap-model pipeline (3 Nano calls, plus
-Ultra on about 1 file in 5) that roughly matches one whole-file Ultra call on missed violations, at the cost of more
-false alarms. Token cost per method was not measured; that comparison is still open.
+Ultra on the 38% of Articles where the samples disagree) that roughly matches one whole-file Ultra call on missed
+violations, at the cost of more false alarms.
+
+16. **Cost: about 4x cheaper than whole-file Ultra, about 2x slower** (`results/cost.md`, `python -m screener.cost`).
+    Measured on 20 random items at Token Factory list prices (Nano $0.06/$0.24, Ultra $1/$3 per 1M tokens in/out):
+    $0.0017 per Article for the Screener vs $0.0076 for one whole-file Ultra call ($0.009 vs $0.038 per five-Article
+    file). The Screener sends more tokens but mostly to Nano; its Ultra calls see one section, not the whole file.
+    Wall time per Article: 6.5 s vs 2.9 s, measured sequentially from India. In the app all Articles run in parallel.
 
 ## 2. Why this matters
 

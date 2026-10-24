@@ -140,7 +140,7 @@ uv pip install --python .venv numpy pandas scipy scikit-learn krippendorff openp
 - **A screening aid, not legal advice** or a conformity assessment. It tells a reviewer where to look.
 - Evaluated on **synthetic, expert-labelled excerpts**. Real technical files are longer and messier.
 - Covers **Articles 9, 10, 12, 14 and 15**, the core high-risk requirements.
-- About **one Article in five** goes to human review, on purpose.
+- About **one Article in eight** goes to human review, on purpose.
 
 ## Built with
 

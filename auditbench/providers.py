@@ -50,6 +50,9 @@ def strip_reasoning(text: str) -> str:
     return re.sub(r"(?s)<think>.*?</think>", "", text or "").strip()
 
 
+USAGE: list[tuple[str, dict]] = []  # (model, usage) per OpenAI-compatible call, for cost accounting
+
+
 def generate(spec: str, prompt: str, max_tokens: int = 4096, retries: int = 6) -> tuple[str, str, int]:
     """Return (text, model_id, prompt_tokens)."""
     provider, model = spec.split(":", 1)
@@ -79,6 +82,7 @@ def generate(spec: str, prompt: str, max_tokens: int = 4096, retries: int = 6) -
                 d = json.loads(r.read())
             msg = d["choices"][0]["message"]
             text = strip_reasoning(msg.get("content") or "")
+            USAGE.append((model, d.get("usage") or {}))
             return text, d.get("model", model), (d.get("usage") or {}).get("prompt_tokens", 0)
         except urllib.error.HTTPError as e:
             detail = e.read().decode(errors="replace")[:300]

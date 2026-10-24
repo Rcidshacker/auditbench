@@ -78,3 +78,46 @@ Expert-labelled real Annex IV documentation doesn't exist publicly, and we can't
 ## Order
 
 L4 (now, offline) → L5 + L3 on OpenJev (background) → L1 as keys arrive → L2 once NVIDIA is available (needs a strong attacker *and* a separate-family verifier) → L7 → update REPORT, push.
+
+## Phase 3: Screener evaluation protocol (frozen 2026-10-24, before any run below)
+
+Written before running anything in this section, and committed so the git history shows it came first. Motivated by
+fellowship review feedback and by two practices in Antoniades et al. 2026 (*Heuresis*, arXiv:2606.25198): treat
+the judge as a measured component with a fixed regression suite, and score on held-out data, because a method
+that ranks first on the data it was built on can fail elsewhere.
+
+**Disclosure.** The v1 evaluation (`results/screener_eval.md`) already ran the Screener on all 120 items. The
+Screener's prompt, K = 3 and the escalation rule (spread >= 2 or median = 3) were fixed before that run and are
+not changed here. Any *new* component (the heading-less segmenter below) is developed on the dev split only.
+
+**Split.** By system, since the five sections of a technical file share a system: dev = AIReg-Bench uses 1-4
+(60 items, 37 expert non-compliant), test = uses 5-8 (60 items, 36). Test is run once per frozen configuration.
+
+**Document conditions** (target excerpt first in a five-section file, as in v1):
+- `headed`: sections start with `**Article N**` (the v1 condition).
+- `titled`: each `Article N` heading line replaced by a plain section title (`## 1. Human oversight`), no Article
+  numbers, like many real Annex IV files.
+- `plain`: heading lines and section separators removed; one continuous text.
+
+**Methods**
+- `whole_nano` (x3 reps): one whole-file Nemotron 3 Nano call, AIReg-Bench prompt. Reported per rep and as the
+  median of the three (a compute-matched majority vote).
+- `whole_ultra` (x1): one whole-file Nemotron 3 Ultra call, AIReg-Bench prompt (the bigger-model baseline).
+- `section_nano1`, `section_nano3` (ablations, read from the Screener's own samples): first sample only; median of
+  three without escalation.
+- `screener` (x3 reps on `headed`, x1 on `titled` and `plain`): the full pipeline. On `titled`/`plain` it is run
+  as shipped (whole-text fallback) and with the segmenter (`screener_seg`).
+
+**Metrics.** Primary: false clearance on expert non-compliant items (median expert score < 4), counted two ways:
+score >= 4 (comparable across methods) and, for the Screener, a confident "likely compliant" verdict. Secondary:
+QWK and MAE vs the expert median, false rejection on expert-compliant items, human-review rate, model calls per
+item. Uncertainty: paired item bootstrap (10,000 resamples, 95% percentile CI) for every method difference;
+cluster bootstrap over the 8 systems as a sensitivity check; mean and SD across reps.
+
+**Decision rule.** "The Screener reduces false clearance relative to X" is claimed only if the paired 95% CI of the
+difference excludes 0 on the test split. Results that miss this are reported as they are.
+
+**Regression suite** (`screener/regression.py`): a fixed list of cases with an expected outcome (unanimous-expert
+violations must not be cleared, unanimous-expert compliant files must not be rejected, injected reviewer notes
+must be flagged, heading-less files must still be split). Run before and after any engine change; per-case table
+committed with the results.

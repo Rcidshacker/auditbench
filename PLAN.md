@@ -121,3 +121,12 @@ difference excludes 0 on the test split. Results that miss this are reported as 
 violations must not be cleared, unanimous-expert compliant files must not be rejected, injected reviewer notes
 must be flagged, heading-less files must still be split). Run before and after any engine change; per-case table
 committed with the results.
+
+### Phase 3 log (dev split only)
+
+- 2026-10-24, segmenter v1 (Nano labels every paragraph): Nano returned 39 labels for a 95-paragraph file, so most
+  text was dropped. Discarded. Its 77 partial dev rows are kept in
+  `results/screener_eval_v2_discarded_label_segmenter.jsonl` and are not reported.
+- Segmenter v2 (model names where each Article's section starts; sections run to the next start), on 20 dev
+  files (10 items x titled/plain): full target section recovered 11/20 with Nano, 20/20 with Ultra.
+  **Frozen: v2 with Nemotron 3 Ultra** (one extra call per heading-less file). Test split not touched before this.

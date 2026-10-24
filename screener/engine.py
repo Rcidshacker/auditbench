@@ -71,6 +71,33 @@ def split_sections(doc: str) -> dict[int, str]:
     return sections
 
 
+SEGMENT = """Below is an AI system's technical documentation, split into numbered paragraphs (only the opening of each \
+is shown). The document is a sequence of consecutive sections, each documenting one EU AI Act Article: \
+9 (risk management), 10 (data and data governance), 12 (record-keeping), 14 (human oversight), \
+15 (accuracy, robustness and cybersecurity). Find where each section starts.
+
+{paras}
+
+Reply with JSON only, sections in document order: \
+{{"sections": [{{"article": <9|10|12|14|15>, "start": <paragraph number>}}, ...]}}"""
+
+
+def segment(doc: str) -> dict[int, str]:
+    """Fallback for files without 'Article N' headings: Nemotron Ultra names the paragraph where each Article's section
+    starts, and each section runs to the next start. Chosen on the dev split (PLAN.md phase 3 log)."""
+    paras = [p.strip() for p in re.split(r"\n\s*\n", doc) if p.strip() and not re.fullmatch(r"[-*_\s]+", p)]
+    numbered = "\n".join(f"[{i}] {p[:220]}" for i, p in enumerate(paras))
+    text, _, _ = generate(STRONG, SEGMENT.format(paras=numbered), max_tokens=1000)
+    starts = sorted({(int(s["start"]), int(s["article"])) for s in
+                     json.loads(re.search(r"\{.*\}", text, re.S).group())["sections"]
+                     if int(s["article"]) in ARTICLES and 0 <= int(s["start"]) < len(paras)})
+    sections: dict[int, str] = {}
+    for k, (start, art) in enumerate(starts):
+        end = starts[k + 1][0] if k + 1 < len(starts) else len(paras)
+        sections[art] = (sections.get(art, "") + "\n\n" + "\n\n".join(paras[start:end])).strip()
+    return sections
+
+
 def flags(doc: str) -> list[dict]:
     """One entry per flagged line; a line matching several patterns lists all its labels."""
     by_line: dict[str, list[str]] = {}
@@ -155,19 +182,24 @@ def _safe(fn, *a):
 
 
 def screen(doc: str, outline: str = "", articles: list[int] | None = None) -> dict:
-    """Screen a technical file. Sections are found by Article headings; without headings the whole text is
-    assessed against each requested Article (less reliable, reported as such)."""
+    """Screen a technical file. Sections are found by Article headings, else by the segmenter; if both fail the
+    whole text is assessed against each requested Article (less reliable, reported as such)."""
     sections = split_sections(doc)
+    segmented = not sections
+    if segmented:
+        sections = _safe(segment, doc) or {}
     sectioned = bool(sections)
     targets = articles or (sorted(sections) if sectioned else ARTICLES)
     work = {a: sections.get(a, "") if sectioned else doc for a in targets}
     with ThreadPoolExecutor(len(work) or 1) as ex:
         results = dict(zip(work, ex.map(lambda kv: assess_article(kv[0], kv[1], outline) if kv[1] else None,
                                         work.items())))
-    return {"sectioned": sectioned,
+    return {"sectioned": sectioned, "segmented": segmented and sectioned,
             "articles": [results[a] or {"article": a, "title": TITLES[a], "verdict": "no section found",
                                         "score": None} for a in targets],
             "flags": flags(doc),
-            "note": None if sectioned else "No Article headings found, so each Article was judged against the whole "
-                                           "text. Our tests show long multi-section files hide violations; add "
-                                           "'Article N' headings for a reliable result."}
+            "note": ("No Article headings found, so sections were assigned to Articles by the model. Check the split; "
+                     "'Article N' headings give the most reliable result." if segmented and sectioned else
+                     None if sectioned else
+                     "No Article sections could be found, so each Article was judged against the whole text. Our tests "
+                     "show long multi-section files hide violations; add 'Article N' headings for a reliable result.")}

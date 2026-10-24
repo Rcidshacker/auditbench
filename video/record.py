@@ -8,6 +8,7 @@ import base64
 import os
 import shutil
 import subprocess
+import sys
 import time
 from pathlib import Path
 
@@ -143,6 +144,8 @@ def main():
     with sync_playwright() as p:
         browser = p.chromium.launch(executable_path=str(CHROME))
         for name, fn in CLIPS.items():
+            if sys.argv[1:] and name not in sys.argv[1:]:  # e.g. `record.py 1_landing 4_findings`
+                continue
             record(browser, name, fn)
         browser.close()
 

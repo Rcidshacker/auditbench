@@ -99,7 +99,7 @@ def main():
         plan = [("card", bg_id, 30.0), ("clip", clip_ids["1_landing"], duration(CLIPS / "1_landing.mp4")),
                 ("clip", clip_ids["2_dossier"], duration(CLIPS / "2_dossier.mp4")),
                 ("clip", clip_ids["3_injected"], duration(CLIPS / "3_injected.mp4")),
-                ("card", bg_id, 11.0), ("clip", clip_ids["4_findings"], duration(CLIPS / "4_findings.mp4")),
+                ("card", bg_id, 20.5), ("clip", clip_ids["4_findings"], duration(CLIPS / "4_findings.mp4")),
                 ("card", bg_id, 8.0)]
         t, starts = 0.0, []
         for kind, media, length in plan:
@@ -125,13 +125,16 @@ def main():
               weight=500, color=ACCENT, y=0.1)
         title(s_intro + 19.0, 10.5, "We tested LLM auditors on 120 files labelled by legal experts.", size=0.042,
               y=-0.1)
-        title(s_intro + 19.0, 10.5, "Put the violating section first in a full technical file:\nwhole-file judges "
-              "missed up to 37% of violations.", size=0.042, weight=600, color=ACCENT, y=0.06)
+        title(s_intro + 19.0, 10.5, "Put the violating section first in a full technical file:\na whole-file Nemotron "
+              "Nano judge missed about half of the violations.", size=0.042, weight=600, color=ACCENT, y=0.06)
 
         # results + outro cards
-        title(s_results + 0.3, 10.4, "Same 120 files, run on Nebius Token Factory", size=0.04, color=MUTE, y=-0.2)
-        title(s_results + 0.3, 10.4, "Violations missed\nWhole-file Nemotron 3 Nano: 37%\nAuditBench Screener: 5.5%",
-              size=0.06, y=0.02)
+        title(s_results + 0.3, 20.0, "Pre-registered re-test: 120 files, 3 runs, Nebius Token Factory", size=0.04,
+              color=MUTE, y=-0.25)
+        title(s_results + 0.3, 20.0, "Violations missed\nWhole-file Nemotron 3 Nano: 45%\nWhole-file Nemotron 3 Ultra: 6.8%\n"
+              "AuditBench Screener: 4.1%", size=0.055, y=0.0)
+        title(s_results + 10.8, 9.5, "Screener vs Ultra: a statistical tie. The gain comes from the prompt, not the split.",
+              size=0.032, weight=600, color=ACCENT, y=0.27)
         title(s_outro + 0.3, 7.5, "AuditBench Screener", size=0.08, y=-0.12)
         title(s_outro + 0.3, 7.5, "auditbench-screener.vercel.app\ngithub.com/Rcidshacker/auditbench  (MIT)",
               size=0.035, weight=500, color=MUTE, y=0.05)

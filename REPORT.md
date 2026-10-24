@@ -43,6 +43,49 @@
    - Reading: compliant text *after* the violation dilutes it. That's a recency/halo effect, and it's exactly what a real Annex IV file, with many sections, would trigger.
 9. **No sign that renaming matters (L5).** Swapping every company and product name for a fresh one moved scores by +0.011 (CI −0.022, +0.044) for holistic and +0.011 (−0.042, +0.061) for generative, with no verdict flips beyond noise. This weak probe finds no evidence that verdicts depend on memorised surface names; it can't rule memorisation out.
 
+## 1c. Phase 3: does the Screener hold up under a frozen protocol? (`results/screener_eval_v2.md`)
+
+Protocol frozen in `PLAN.md` before any run (commit `c01f120`). Split by system: dev = uses 1-4, test = uses 5-8,
+test touched once. Every item's excerpt sits first in a five-section file. 1,560 scored calls on Nebius Token
+Factory, no failed jobs. Brackets are 95% item-bootstrap CIs; the cluster bootstrap over 8 systems is in the table file.
+
+10. **Against the obvious baselines, the Screener only clearly beats whole-file Nano.**
+    - Test split, false clearance on the 36 expert non-compliant items: whole-file Nano 47.2% (17/36), Nano median
+      of 3 38.9%, **whole-file Ultra 11.1% (4/36)**, Screener **0.0% (0/36)**.
+    - Screener vs whole-file Ultra on test: +11.1 points (CI +2.8, +22.2), so the pre-registered rule is met. But the
+      cluster CI reaches 0 (+0.0, +25.7), and on dev the order flips (Ultra 2.7%, Screener 8.1%). Across all 120
+      the gap is +2.7 (CI −5.5, +11.0): **not distinguishable from a single whole-file Ultra call.**
+    - Ultra agrees with the experts more (QWK 0.793 vs 0.727 over all 120), and the Screener rejects more
+      compliant files: false rejection 14.9% vs 6.4% over all 120 (20.8% vs 4.2% on test). The Screener is
+      more conservative, not more accurate.
+11. **The gain comes from the judging prompt, not from splitting the file.** This contradicts the design story
+    in v1.
+    - With headings removed, the shipped Screener cannot split and judges the whole text, still with its own
+      prompt and 3 Nano samples. Its false clearance is 0.0% (titled) and 4.1% (plain) over all 120, no worse
+      than per-section judging (4.1%).
+    - Same model, whole text, AIReg-Bench prompt: 43.8-52.1%. The difference is the instructions: judge one named
+      Article, ignore claims and notes to the reviewer, count a disclosed gap against compliance. The long-file
+      blind spot of finding 8 is real for the AIReg-Bench prompt, but a targeted prompt mostly closes it without
+      splitting.
+12. **The heading-less segmenter works mechanically but buys nothing measurable.** Ultra boundary detection
+    recovered the full target section in 98% of 240 runs (developed on dev only; a Nano version and a
+    paragraph-labelling version were discarded, see the `PLAN.md` log). False clearance with it: 6.8% (titled) and
+    1.4% (plain), against 0.0% and 4.1% without it. It costs one extra Ultra call and does not reduce false clearance.
+13. **Sampling and escalation: small, uncertain effects.** Per-section Nano, 1 sample: false clearance 2.7%,
+    false rejection 23.4%. Median of 3: 6.8% and 12.8%. Full Screener: 4.1% and 14.9%. Sampling mainly cuts
+    false rejections and raises QWK (0.515 → 0.631 → 0.727). The false-clearance differences are within noise.
+14. **Run-to-run noise is large enough to matter for single numbers.** Three repeats of whole-file Nano give
+    false clearance 52.1%, 45.2% and 42.5% (v1's single run: 37.0%). The Screener's QWK varies from 0.727 to 0.835.
+    Any one-run figure in this project should be read with that spread in mind.
+15. **Regression suite: 14/14** fixed known-answer cases pass (`results/regression.md`). These are 5 unanimous
+    violations, 5 unanimous compliant files, 2 injected reviewer notes (both flagged) and 2 heading-less files.
+
+**What changes in the claims.** Still supported: on long files a whole-file Nano judge with the AIReg-Bench prompt
+misses about half of violations, and the Screener misses about 4%. No longer supported: "splitting by Article is the
+fix", and "the Screener beats a strong single judge". The honest pitch is a cheap-model pipeline (3 Nano calls, plus
+Ultra on about 1 file in 5) that roughly matches one whole-file Ultra call on missed violations, at the cost of more
+false alarms. Token cost per method was not measured; that comparison is still open.
+
 ## 2. Why this matters
 
 - The AI Omnibus moved Annex III high-risk obligations (Arts 9–15) to **2 Dec 2027**. Providers, notified bodies and the AI Office will use LLM pre-screening of technical documentation to cope with volume.

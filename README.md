@@ -38,7 +38,25 @@ Same 120 expert-labelled files, violating section placed first in a five-section
 | Whole-file Nemotron 3 Nano | 0.347 | **37%** (27 of 73) |
 | **AuditBench Screener** | **0.769** | **5.5%** (4 of 73) |
 
-<sub>Reproduce: <code>python -m screener.evaluate</code> · raw rows in <a href="results/screener_eval.jsonl"><code>results/screener_eval.jsonl</code></a> · table in <a href="results/screener_eval.md"><code>results/screener_eval.md</code></a></sub>
+<sub>v1, single run: raw rows in <a href="results/screener_eval.jsonl"><code>results/screener_eval.jsonl</code></a> · table in <a href="results/screener_eval.md"><code>results/screener_eval.md</code></a></sub>
+
+### Re-tested under a frozen protocol (v2)
+
+We then pre-registered a stricter test in [`PLAN.md`](PLAN.md): stronger baselines, a held-out split by system, 3 repeat runs, bootstrap CIs, and files with headings removed. Missed violations over all 120 files, 95% CI:
+
+| | Violations falsely cleared | Compliant files falsely rejected |
+|---|:---:|:---:|
+| Whole-file Nemotron 3 Nano (1 call / median of 3) | 52% / 47% | 2% / 0% |
+| Whole-file Nemotron 3 Ultra (1 call) | **6.8%** [1, 14] | **6.4%** |
+| AuditBench Screener | **4.1%** [0, 10] | 14.9% |
+| Screener on files with no headings (whole text) | 0.0% to 4.1% | 8.5% to 10.6% |
+
+What this changed:
+- The Screener beats whole-file Nano by a wide margin. Against one whole-file Ultra call it is a statistical tie on missed violations, and it raises more false alarms.
+- The gain comes from the **judging prompt** (one Article, ignore claims, count disclosed gaps), not from splitting the file. On files with no headings it does just as well.
+- Run-to-run noise is real: three runs of the same whole-file judge gave 52%, 45% and 43%.
+
+Full write-up: [`REPORT.md` §1c](REPORT.md) · tables: [`results/screener_eval_v2.md`](results/screener_eval_v2.md) · known-answer suite (14/14 pass): [`results/regression.md`](results/regression.md) · reproduce: `python -m screener.evaluate --split test --stage all`
 
 ## How it works
 
@@ -59,7 +77,7 @@ flowchart LR
 
 | Step | The failure it fixes |
 |---|---|
-| **Split by Article** | Whole-file judges let compliant sections mask a violation (9.6% to 37% false clearance across three judges we tested). |
+| **Judge one Article at a time** | Whole-file judges with a generic prompt let compliant sections mask a violation. The v2 re-test shows a targeted prompt is what closes this; splitting by heading adds little (files without headings are split by Nemotron Ultra). |
 | **Sample three times** | A single LLM sample can flip its verdict between identical runs. |
 | **Escalate to Ultra, then to a human** | Even three legal experts only partly agree (Krippendorff's α 0.657). Close calls go to a person instead of a guess. |
 | **Flag claims, check quotes** | Reviewer-addressed notes are flagged and ignored. Evidence quotes appear only if they occur (near-)verbatim in the document. |
